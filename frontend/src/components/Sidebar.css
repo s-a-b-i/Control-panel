@@ -1,0 +1,15 @@
+/* src/components/Sidebar.css */
+
+.sidebar-link {
+    text-decoration: none;
+    color: #ffffff; /* Light color for the links */
+  }
+  
+  .sidebar-link:visited {
+    color: #ffffff; /* Ensure visited links are also light */
+  }
+  
+  .sidebar-link:hover {
+    color: #1976d2; /* Primary color on hover */
+  }
+  
