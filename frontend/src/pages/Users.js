@@ -1,14 +1,116 @@
-// src/pages/Users.js
+import React from "react";
+import SearchBar from "../components/UserSearchBar";
+import TableWithPagination from "../components/TableWithPagination";
 
-import React from 'react';
+const UsersPage = () => {
+  // Mock data (replace with actual fetch logic)
+  const userData = [
+    {
+      id: 10000475,
+      nickname: "qw",
+      account: "sssre",
+      parentId: 10000472,
+      parentNickname: "test",
+      communication: "Other Equ",
+      onlineStatus: "Offline",
+    },
+    {
+      id: 10000475,
+      nickname: "qw",
+      account: "sssre",
+      parentId: 10000472,
+      parentNickname: "test",
+      communication: "Other Equ",
+      onlineStatus: "Offline",
+    },
+    {
+      id: 10000475,
+      nickname: "qw",
+      account: "sssre",
+      parentId: 10000472,
+      parentNickname: "test",
+      communication: "Other Equ",
+      onlineStatus: "Offline",
+    },
+    {
+      id: 10000475,
+      nickname: "qw",
+      account: "sssre",
+      parentId: 10000472,
+      parentNickname: "test",
+      communication: "Other Equ",
+      onlineStatus: "Offline",
+    },
+    {
+      id: 10000475,
+      nickname: "qw",
+      account: "sssre",
+      parentId: 10000472,
+      parentNickname: "test",
+      communication: "Other Equ",
+      onlineStatus: "Offline",
+    },
+    {
+      id: 10000475,
+      nickname: "qw",
+      account: "sssre",
+      parentId: 10000472,
+      parentNickname: "test",
+      communication: "Other Equ",
+      onlineStatus: "Offline",
+    },
+    {
+      id: 10000475,
+      nickname: "qw",
+      account: "sssre",
+      parentId: 10000472,
+      parentNickname: "test",
+      communication: "Other Equ",
+      onlineStatus: "Offline",
+    },
+    {
+      id: 10000475,
+      nickname: "qw",
+      account: "sssre",
+      parentId: 10000472,
+      parentNickname: "test",
+      communication: "Other Equ",
+      onlineStatus: "Offline",
+    },
+    {
+      id: 10000475,
+      nickname: "qw",
+      account: "sssre",
+      parentId: 10000472,
+      parentNickname: "test",
+      communication: "Other Equ",
+      onlineStatus: "Offline",
+    },
+    
+    // ... (repeat this object 16 more times to match your original data)
+  ];
 
-const Users = () => {
+  // Styling for margin and spacing
+  const containerStyle = {
+    padding: "20px",
+    margin: "0px 50px",
+    maxWidth: "1200px",
+  };
+
+  const elementSpacing = {
+    marginBottom: "40px",
+  };
+
   return (
-    <div>
-      <h1>Users</h1>
-      <p>Manage your users here.</p>
+    <div style={containerStyle}>
+      <div style={elementSpacing}>
+        <SearchBar />
+      </div>
+      <div>
+        <TableWithPagination tableType="user" data={userData} />
+      </div>
     </div>
   );
 };
 
-export default Users;
+export default UsersPage;

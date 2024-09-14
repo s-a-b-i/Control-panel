@@ -7,8 +7,19 @@ import Sidebar from './components/Sidebar';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Users from './pages/Users';
-import Settings from './pages/Settings';
 import PrivateRoute from './components/PrivateRoute';
+
+// Import new components for each page
+import ServerConfiguration from './pages/ServerConfiguration';
+import AppConfiguration from './pages/AppConfiguration';
+import DeviceList from './pages/DeviceList';
+import ControlRecords from './pages/ControlRecords';
+import TransactionRecords from './pages/TransactionRecords';
+import AssetRecords from './pages/AssetRecords';
+import KeyboardRecording from './pages/KeyboardRecording';
+import ApplicationList from './pages/ApplicationList';
+import TriggeringRules from './pages/TriggeringRules';
+import AddressList from './pages/AddressList';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -67,11 +78,101 @@ function App() {
             }
           />
           <Route
-            path="/settings"
+            path="/server-configuration"
             element={
               <PrivateRoute>
                 <ProtectedLayout>
-                  <Settings />
+                  <ServerConfiguration />
+                </ProtectedLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/app-configuration"
+            element={
+              <PrivateRoute>
+                <ProtectedLayout>
+                  <AppConfiguration />
+                </ProtectedLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/device-list"
+            element={
+              <PrivateRoute>
+                <ProtectedLayout>
+                  <DeviceList />
+                </ProtectedLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/control-records"
+            element={
+              <PrivateRoute>
+                <ProtectedLayout>
+                  <ControlRecords />
+                </ProtectedLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/transaction-records"
+            element={
+              <PrivateRoute>
+                <ProtectedLayout>
+                  <TransactionRecords />
+                </ProtectedLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/asset-records"
+            element={
+              <PrivateRoute>
+                <ProtectedLayout>
+                  <AssetRecords />
+                </ProtectedLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/keyboard-recording"
+            element={
+              <PrivateRoute>
+                <ProtectedLayout>
+                  <KeyboardRecording />
+                </ProtectedLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/application-list"
+            element={
+              <PrivateRoute>
+                <ProtectedLayout>
+                  <ApplicationList />
+                </ProtectedLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/triggering-rules"
+            element={
+              <PrivateRoute>
+                <ProtectedLayout>
+                  <TriggeringRules />
+                </ProtectedLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/address-list"
+            element={
+              <PrivateRoute>
+                <ProtectedLayout>
+                  <AddressList />
                 </ProtectedLayout>
               </PrivateRoute>
             }

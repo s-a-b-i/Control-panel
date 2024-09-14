@@ -4,11 +4,9 @@ import { Box, List, ListItem, ListItemText, ListItemIcon, Collapse } from '@mui/
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import SettingsIcon from '@mui/icons-material/Settings';
-import BuildIcon from '@mui/icons-material/Build';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { styled } from '@mui/material/styles';
-import { useTheme } from '@mui/material/styles';
 
 // Custom styled Link component
 const CustomLink = styled(Link)(({ theme }) => ({
@@ -22,26 +20,7 @@ const CustomLink = styled(Link)(({ theme }) => ({
     },
 }));
 
-// Custom styled ListItem
-const CustomListItem = styled(ListItem)(({ theme }) => ({
-    color: '#ffffff', // Set item text color to white
-    '& .MuiListItemIcon-root': {
-        color: '#ffffff', // Set icon color to white
-    },
-    '& .MuiListItemText-primary': {
-        color: '#ffffff', // Set ListItemText color to white
-    },
-}));
-
-// Custom styled Collapse
-const CustomCollapse = styled(Collapse)(({ theme }) => ({
-    '& .MuiListItem-root': {
-        paddingLeft: theme.spacing(4), // Indent sub-items
-    },
-}));
-
 const Sidebar = ({ open }) => {
-    const theme = useTheme();
     const [openItems, setOpenItems] = useState({});
 
     const handleClick = (item) => {
@@ -76,10 +55,10 @@ const Sidebar = ({ open }) => {
                 </ListItem>
                 <Collapse in={openItems.systemConfig} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItem button component={CustomLink} to="/users/subitem1">
+                        <ListItem button component={CustomLink} to="/server-configuration">
                             <ListItemText inset primary="Server Configuration" />
                         </ListItem>
-                        <ListItem button component={CustomLink} to="/users/subitem2">
+                        <ListItem button component={CustomLink} to="/app-configuration">
                             <ListItemText inset primary="App Configuration" />
                         </ListItem>
                     </List>
@@ -90,8 +69,6 @@ const Sidebar = ({ open }) => {
                     <ListItemText primary="User Management" />
                 </ListItem>
 
-
-
                 <ListItem button onClick={() => handleClick('device')}>
                     <ListItemIcon><SettingsIcon /></ListItemIcon>
                     <ListItemText primary="Device Management" />
@@ -100,29 +77,29 @@ const Sidebar = ({ open }) => {
 
                 <Collapse in={openItems.device} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItem button component={CustomLink} to="/settings/subitem1">
+                        <ListItem button component={CustomLink} to="/device-list">
                             <ListItemText inset primary="Device List" />
                         </ListItem>
-                        <ListItem button component={CustomLink} to="/settings/subitem2">
+                        <ListItem button component={CustomLink} to="/control-records">
                             <ListItemText inset primary="Control Records" />
                         </ListItem>
-                        <ListItem button component={CustomLink} to="/settings/subitem2">
+                        <ListItem button component={CustomLink} to="/transaction-records">
                             <ListItemText inset primary="Transaction Records" />
                         </ListItem>
-                        <ListItem button component={CustomLink} to="/settings/subitem2">
+                        <ListItem button component={CustomLink} to="/asset-records">
                             <ListItemText inset primary="Asset Records" />
                         </ListItem>
-                        <ListItem button component={CustomLink} to="/settings/subitem2">
+                        <ListItem button component={CustomLink} to="/keyboard-recording">
                             <ListItemText inset primary="Keyboard Recording" />
                         </ListItem>
-                        <ListItem button component={CustomLink} to="/settings/subitem2">
-                            <ListItemText inset primary="Application list" />
+                        <ListItem button component={CustomLink} to="/application-list">
+                            <ListItemText inset primary="Application List" />
                         </ListItem>
-                        <ListItem button component={CustomLink} to="/settings/subitem2">
-                            <ListItemText inset primary="Triggering rules" />
+                        <ListItem button component={CustomLink} to="/triggering-rules">
+                            <ListItemText inset primary="Triggering Rules" />
                         </ListItem>
-                        <ListItem button component={CustomLink} to="/settings/subitem2">
-                            <ListItemText inset primary="Address list" />
+                        <ListItem button component={CustomLink} to="/address-list">
+                            <ListItemText inset primary="Address List" />
                         </ListItem>
                     </List>
                 </Collapse>
@@ -131,37 +108,6 @@ const Sidebar = ({ open }) => {
                     <ListItemIcon><PeopleIcon /></ListItemIcon>
                     <ListItemText primary="Role Management" />
                 </ListItem>
-                {/* 
-                <ListItem button component={CustomLink} to="/users">
-                    <ListItemIcon><PeopleIcon /></ListItemIcon>
-                    <ListItemText primary="Group Management" />
-                </ListItem>
-
-                <ListItem button component={CustomLink} to="/users">
-                    <ListItemIcon><PeopleIcon /></ListItemIcon>
-                    <ListItemText primary="Single Chat record" />
-                </ListItem>
-
-                <ListItem button component={CustomLink} to="/users">
-                    <ListItemIcon><PeopleIcon /></ListItemIcon>
-                    <ListItemText primary="Red Envelope Record" />
-                </ListItem>
-
-                <ListItem button component={CustomLink} to="/users">
-                    <ListItemIcon><PeopleIcon /></ListItemIcon>
-                    <ListItemText primary="Report Management" />
-                </ListItem>
-
-                <ListItem button component={CustomLink} to="/users">
-                    <ListItemIcon><PeopleIcon /></ListItemIcon>
-                    <ListItemText primary="Friends circle" />
-                </ListItem>
-
-                <ListItem button component={CustomLink} to="/users">
-                    <ListItemIcon><PeopleIcon /></ListItemIcon>
-                    <ListItemText primary="Offical account platform" />
-                </ListItem> */}
-
             </List>
         </Box>
     );
