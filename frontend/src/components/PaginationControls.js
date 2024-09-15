@@ -80,7 +80,7 @@ const PaginationControls = ({ page, rowsPerPage, setPage, totalItems, handleChan
         sx={{ mx: 1 }}
         onClick={() => setPage(parseInt(page))}
       >
-        Go
+        Sure
       </StyledButton>
 
       <Typography sx={{ color: textColor, mx: 1, fontSize: 14, height: 32, lineHeight: '32px' }}>

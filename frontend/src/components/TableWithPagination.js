@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import UserTable from './UserTable';
 import DeviceListTable from './DeviceListTable';
+import ControlRecordsTable from './ControlRecordsTable';
+import TransactionHistoryTable from './TransactionRecordsTable';
+import AssetRecordsTable from './AssetRecordsTable';
+import AddressListTable from './AddressListTable';
+import TriggeringRulesTable from './TriggeringRulesTable';
+import ApplicationListTable from './ApplicationListTable';
+import KeyloggerTable from './KeyLoggerTable.js'; // Import KeyloggerTable
 
 const TableWithPagination = ({ tableType, data }) => {
   const [page, setPage] = useState(0);
@@ -22,7 +29,38 @@ const TableWithPagination = ({ tableType, data }) => {
     setPage(0);
   };
 
-  const TableComponent = tableType === 'user' ? UserTable : DeviceListTable;
+  let TableComponent;
+  switch (tableType) {
+    case 'user':
+      TableComponent = UserTable;
+      break;
+    case 'device':
+      TableComponent = DeviceListTable;
+      break;
+    case 'controlRecord':
+      TableComponent = ControlRecordsTable;
+      break;
+    case 'transactionHistory':
+      TableComponent = TransactionHistoryTable;
+      break;
+    case 'asset':
+      TableComponent = AssetRecordsTable;
+      break;
+    case 'addressList':
+      TableComponent = AddressListTable;
+      break;
+    case 'triggeringRules':
+      TableComponent = TriggeringRulesTable;
+      break;
+    case 'applicationList':
+      TableComponent = ApplicationListTable;
+      break;
+    case 'keylogger': // Adding KeyloggerTable case
+      TableComponent = KeyloggerTable;
+      break;
+    default:
+      TableComponent = UserTable;
+  }
 
   return (
     <TableComponent

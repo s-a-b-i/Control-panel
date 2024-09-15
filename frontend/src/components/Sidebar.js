@@ -89,8 +89,8 @@ const Sidebar = ({ open }) => {
                         <ListItem button component={CustomLink} to="/asset-records">
                             <ListItemText inset primary="Asset Records" />
                         </ListItem>
-                        <ListItem button component={CustomLink} to="/keyboard-recording">
-                            <ListItemText inset primary="Keyboard Recording" />
+                        <ListItem button component={CustomLink} to="/key-Logger">
+                            <ListItemText inset primary="Keylogger" />
                         </ListItem>
                         <ListItem button component={CustomLink} to="/application-list">
                             <ListItemText inset primary="Application List" />

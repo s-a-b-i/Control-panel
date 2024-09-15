@@ -16,7 +16,7 @@ import DeviceList from './pages/DeviceList';
 import ControlRecords from './pages/ControlRecords';
 import TransactionRecords from './pages/TransactionRecords';
 import AssetRecords from './pages/AssetRecords';
-import KeyboardRecording from './pages/KeyboardRecording';
+import KeyLogger from './pages/KeyLogger';
 import ApplicationList from './pages/ApplicationList';
 import TriggeringRules from './pages/TriggeringRules';
 import AddressList from './pages/AddressList';
@@ -138,11 +138,11 @@ function App() {
             }
           />
           <Route
-            path="/keyboard-recording"
+            path="/key-Logger"
             element={
               <PrivateRoute>
                 <ProtectedLayout>
-                  <KeyboardRecording />
+                  <KeyLogger />
                 </ProtectedLayout>
               </PrivateRoute>
             }
