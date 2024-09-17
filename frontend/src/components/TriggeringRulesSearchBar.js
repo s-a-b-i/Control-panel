@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";  // Import useTranslation
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: "#2196f3",
@@ -26,21 +27,23 @@ const StyledTextField = styled(TextField)({
 });
 
 const SearchBar = () => {
+  const { t } = useTranslation();  // Initialize translation
+
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
       <StyledTextField 
-        placeholder="Device Number" 
+        placeholder={t("Device Number")} // Translated placeholder
         size="small" 
         sx={{ width: 200 }} 
       />
       <StyledButton variant="contained" size="small">
-        search
+        {t("Search")}  {/* Translated button text */}
       </StyledButton>
       <StyledButton variant="contained" size="small">
-        View Default
+        {t("View Default")}  {/* Translated button text */}
       </StyledButton>
       <Typography sx={{ marginLeft: 2 }}>
-        {'-->>Cryptocurrency Calculator'}
+        {'-->>' + t("Cryptocurrency Calculator")}  {/* Translated text */}
       </Typography>
     </Box>
   );

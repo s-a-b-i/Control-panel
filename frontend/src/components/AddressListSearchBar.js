@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, TextField, Button, Select, MenuItem } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useTranslation } from 'react-i18next';
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -39,13 +40,14 @@ const StyledSelect = styled(Select)({
 });
 
 const SearchBar = () => {
+  const { t } = useTranslation();
+  
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2, alignItems: "center" }}>
       <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Box component="span" sx={{ mr: 1 }}>Currency:</Box>
+      <Box component="span" sx={{ mr: 1 }}>{t("Currency")}:</Box>
         <StyledSelect value="all" size="small" sx={{ width: 200 }}>
-          <MenuItem value="all">all</MenuItem>
-          <MenuItem value="all">all</MenuItem>
+        <MenuItem value="all">{t("All")}</MenuItem>
           <MenuItem value="TRX">TRX-------Tron</MenuItem>
           <MenuItem value="ETH">ETH-------Ethereum</MenuItem>
           <MenuItem value="BTC">BTC---Bitcoin</MenuItem>
@@ -81,23 +83,21 @@ const SearchBar = () => {
       </Box>
       
       <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Box component="span" sx={{ mr: 1 }}>Address Type:</Box>
+        <Box component="span" sx={{ mr: 1 }}>{t("Address Type")}:</Box>
         <StyledSelect value="all" size="small" sx={{ width: 200 }}>
-          <MenuItem value="all">all</MenuItem>
-          <MenuItem value="Company Provided">Company Provided</MenuItem>
-          <MenuItem value="Platform Provided">Platform Provided</MenuItem>
-          {/* Add other address type options here */}
+          <MenuItem value="all">{t("All")}</MenuItem>
+          <MenuItem value="Company Provided">{t("Company Provided")}</MenuItem>
+          <MenuItem value="Platform Provided">{t("Platform Provided")}</MenuItem>
         </StyledSelect>
       </Box>
       
-      <StyledTextField placeholder="Remark" size="small" sx={{ width: 200 }} />
-      
+      <StyledTextField placeholder={t("Remark")} size="small" sx={{ width: 200 }} />
       <StyledButton variant="contained" size="medium">
-        search
+        {t("Search")}
       </StyledButton>
       
       <Button variant="outlined" size="medium">
-        Reset
+        {t("Reset")}
       </Button>
     </Box>
   );

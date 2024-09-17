@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   TextField,
@@ -6,8 +6,11 @@ import {
   Typography,
   Select,
   MenuItem,
+  Popover,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useTranslation } from 'react-i18next'; // Import translation hook
+import Calendar from "./Calendar"; // Ensure the Calendar path is correct
 
 const textColor = "#666";
 
@@ -50,123 +53,89 @@ const StyledSelect = styled(Select)({
 });
 
 const SearchBar = () => {
+  const { t } = useTranslation(); // Hook for translations
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [tradingHours, setTradingHours] = useState("");
+
+  const handleCalendarOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCalendarClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDateSelect = (newDate) => {
+    setSelectedDate(newDate);
+    setTradingHours(`${newDate.toLocaleDateString()}`); // Format as needed
+    setAnchorEl(null); // Close the popover after selection
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "trading-hours-popover" : undefined;
+
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
       <StyledTextField
-        placeholder="Device Number"
+        placeholder={t('Device Number')}
         size="small"
         sx={{ width: 200 }}
       />
       <StyledTextField
-        placeholder="Payment address"
+        placeholder={t('Payment address')}
         size="small"
         sx={{ width: 400 }}
       />
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Typography>Address Type:</Typography>
+        <Typography>{t('Address Type')}:</Typography>
         <StyledSelect
           value="Company + Platform"
           size="small"
           sx={{ width: 200 }}
         >
-          <MenuItem value="Company + Platform">Company + Platform</MenuItem>
-          <MenuItem value="company">company</MenuItem>
-          <MenuItem value="platform">platform</MenuItem>
-          <MenuItem value="Personal">Personal</MenuItem>
+          <MenuItem value="Company + Platform">{t('Company + Platform')}</MenuItem>
+          <MenuItem value="company">{t('Company')}</MenuItem>
+          <MenuItem value="platform">{t('Platform')}</MenuItem>
+          <MenuItem value="Personal">{t('Personal')}</MenuItem>
         </StyledSelect>
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Typography>Wallet APP:</Typography>
-        <StyledSelect defaultValue="all" size="small" sx={{ width: 300 }}>
-          <MenuItem value="all">all</MenuItem>
-          <MenuItem value="Binance">Binance------Binance Exchange</MenuItem>
-          <MenuItem value="Huobi">Huobi-------Huobi Exchange</MenuItem>
-          <MenuItem value="OKX">OKX-----------OECD Exchange</MenuItem>
-          <MenuItem value="KuCoin">KuCoin-------Exchange</MenuItem>
-          <MenuItem value="Trust">Trust--------Trust Wallet</MenuItem>
-          <MenuItem value="imToken">imToken------IM wallet</MenuItem>
-          <MenuItem value="TokenPocket">TokenPocket--TP Wallet</MenuItem>
-          <MenuItem value="TronLink">TronLink-----Bobao Wallet</MenuItem>
-        </StyledSelect>
-      </Box>
-
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Typography>Trading Currency:</Typography>
-        <StyledSelect defaultValue="all" size="small" sx={{ width: 200 }}>
-          <MenuItem value="all">all</MenuItem>
-          <MenuItem value="TRX">TRX-------Tron</MenuItem>
-          <MenuItem value="ETH">ETH-------Ethereum</MenuItem>
-          <MenuItem value="BTC">BTC---Bitcoin</MenuItem>
-          <MenuItem value="BNB">BNB-------BNB Chain</MenuItem>
-          <MenuItem value="SOL">SOL-------Solana</MenuItem>
-          <MenuItem value="XRP">XRP -------XRP</MenuItem>
-          <MenuItem value="LTC">LTC--------Litecoin</MenuItem>
-          <MenuItem value="DOGE">DOGE-----Dogocoin</MenuItem>
-          <MenuItem value="DOT">DOT-------Polkadot</MenuItem>
-          <MenuItem value="HT">HT---------Huobi</MenuItem>
-          <MenuItem value="MATIC">MATIC-----Polygon</MenuItem>
-          <MenuItem value="EOS">EOS-------EOS</MenuItem>
-          <MenuItem value="ADA">ADA - Cardano</MenuItem>
-          <MenuItem value="OP">OP---------Optimism</MenuItem>
-          <MenuItem value="CRO">CRO-------Cronos Chain</MenuItem>
-          <MenuItem value="BCH">BCH - Bitcoin Cash</MenuItem>
-          <MenuItem value="ALGO">ALGO-----Algorand</MenuItem>
-          <MenuItem value="ETC">ETC-------Ethereum Classic</MenuItem>
-          <MenuItem value="VTHO">VTHO-----VeThor</MenuItem>
-          <MenuItem value="OKB">OKB-------OKB</MenuItem>
-          <MenuItem value="OKT">OKT---OKC Token</MenuItem>
-          <MenuItem value="XDAI">XDAI-----Gnosis</MenuItem>
-          <MenuItem value="ZRX">ZRX-------0x</MenuItem>
-          <MenuItem value="AUTO">AUTO-----AUTOv2</MenuItem>
-          <MenuItem value="ATOM">ATOM - Cosmos Hub</MenuItem>
-          <MenuItem value="CKB">CKB-------Nervos</MenuItem>
-          <MenuItem value="KSM">KSM-------Kusama</MenuItem>
-          <MenuItem value="FIL">FIL---------Filecoin</MenuItem>
-          <MenuItem value="AVAX">AVAX - Avalanche</MenuItem>
-          <MenuItem value="XTZ">XTZ--------Tezos</MenuItem>
-        </StyledSelect>
-      </Box>
-
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Typography>Internal settlement of the company:</Typography>
-        <StyledSelect defaultValue="all" size="small" sx={{ width: 150 }}>
-          <MenuItem value="all">all</MenuItem>
-          <MenuItem value="unsettled">unsettled</MenuItem>
-          <MenuItem value="settled">settled</MenuItem>
-        </StyledSelect>
-      </Box>
-
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Typography>Settlement with the platform:</Typography>
-        <StyledSelect defaultValue="all" size="small" sx={{ width: 150 }}>
-          <MenuItem value="all">all</MenuItem>
-          <MenuItem value="unsettled">unsettled</MenuItem>
-          <MenuItem value="settled">settled</MenuItem>
-        </StyledSelect>
-      </Box>
-
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Typography>Trading hours:</Typography>
-        <StyledSelect
-          defaultValue=""
-          displayEmpty
+        <Typography>{t('Trading hours')}:</Typography>
+        <StyledTextField
+          placeholder={t('Select a time range')}
           size="small"
+          value={tradingHours}
+          onClick={handleCalendarOpen}
           sx={{ width: 250 }}
+          readOnly
+        />
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleCalendarClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
         >
-          <MenuItem value="" disabled>
-            Please select a time range
-          </MenuItem>
-        </StyledSelect>
+          <Calendar
+            dueDate={new Date()} // You can customize the max selectable date
+            onDateSelect={handleDateSelect}
+            selectedDate={selectedDate}
+          />
+        </Popover>
       </Box>
 
       <StyledButton variant="contained" size="small">
-        search
+        {t('Search')}
       </StyledButton>
 
       <StyledButton variant="outlined" size="small">
-        Reset
+        {t('Reset')}
       </StyledButton>
     </Box>
   );

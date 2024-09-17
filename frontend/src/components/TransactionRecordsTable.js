@@ -14,6 +14,7 @@ import {
 import { styled } from "@mui/material/styles";
 import PaginationControls from "./PaginationControls.js";
 import CustomActionButton from "./CustomActionButton.js";
+import { useTranslation } from "react-i18next";
 
 const headerBgColor = "#f5f5f5";
 const rowBgColorEven = "#ffffff";
@@ -40,6 +41,10 @@ const StyledTableRow = styled(TableRow)(({ index }) => ({
   backgroundColor: index % 2 === 0 ? rowBgColorEven : rowBgColorOdd,
 }));
 
+const getSettlementStatus = (status) => {
+  return status === "settled" ? "已结算" : "未结算"; // Chinese: Settled -> 已结算, Unsettled -> 未结算
+};
+
 const TransactionHistoryTable = ({
   rows,
   page,
@@ -48,6 +53,8 @@ const TransactionHistoryTable = ({
   totalItems,
   handleChangeRowsPerPage,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Paper
       sx={{
@@ -65,7 +72,7 @@ const TransactionHistoryTable = ({
           paddingBottom: "8px",
         }}
       >
-        Transaction History
+        {t('Transaction History')}
       </Typography>
 
       <Box sx={{ border: `1px solid ${borderColor}`, borderRadius: "4px" }}>
@@ -78,20 +85,14 @@ const TransactionHistoryTable = ({
           >
             <TableHead>
               <TableRow>
-                <StyledTableHeadCell>Device Information</StyledTableHeadCell>
-                <StyledTableHeadCell>User Information</StyledTableHeadCell>
-                <StyledTableHeadCell>
-                  Transaction Information
-                </StyledTableHeadCell>
-                <StyledTableHeadCell>Transfer Amount</StyledTableHeadCell>
-                <StyledTableHeadCell>Payment address</StyledTableHeadCell>
-                <StyledTableHeadCell>Payment Address</StyledTableHeadCell>
-                <StyledTableHeadCell>
-                  Internal settlement status
-                </StyledTableHeadCell>
-                <StyledTableHeadCell>
-                  Settlement with the merchant
-                </StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Device Information')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('User Information')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Transaction Information')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Transfer Amount')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Payment address')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Payment Address')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Internal settlement status')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Settlement with the merchant')}</StyledTableHeadCell>
                 <StyledTableHeadCell
                   sx={{
                     position: "sticky",
@@ -101,7 +102,7 @@ const TransactionHistoryTable = ({
                     boxShadow: "-4px 0px 10px rgba(0, 0, 0, 0.1)",
                   }}
                 >
-                  operate
+                  {t('operate')}
                 </StyledTableHeadCell>
               </TableRow>
             </TableHead>
@@ -109,56 +110,63 @@ const TransactionHistoryTable = ({
               {rows.map((row, index) => (
                 <StyledTableRow key={row.id} index={index}>
                   <StyledTableCell>
-                    Device No.: {row.deviceNo}
+                    {t('Device No.')}: {row.deviceNo}
                     <br />
-                    Brand: {row.brand}
+                    {t('Brand')}: {row.brand}
                     <br />
-                    Model: {row.model}
+                    {t('Model')}: {row.model}
                   </StyledTableCell>
                   <StyledTableCell>
-                    User ID: {row.userId}
+                    {t('User ID')}: {row.userId}
                     <br />
-                    Account: {row.account}
+                    {t('Account')}: {row.account}
                     <br />
-                    Nickname: {row.nickname}
+                    {t('Nickname')}: {row.nickname}
                   </StyledTableCell>
                   <StyledTableCell>
-                    Wallet: {row.wallet}
+                    {t('Wallet')}: {row.wallet}
                     <br />
-                    Currency: {row.currency}
+                    {t('Currency')}: {row.currency}
                     <br />
                     {row.transactionTime}
                   </StyledTableCell>
                   <StyledTableCell>
-                    Amount:{" "}
+                    {t('Amount')}:{" "}
                     <span style={{ color: "green", fontWeight: "bold" }}>
                       {row.amount}
                     </span>
                     <br />
-                    Unit: {row.unit}
+                    {t('Unit')}: {row.unit}
                     <br />
-                    Balance: {row.balance}
+                    {t('Balance')}: {row.balance}
                   </StyledTableCell>
                   <StyledTableCell>
-                      {row.paymentAddress1} {/* Full Payment Address 1 */}
+                      {row.paymentAddress1}
                       <br />
                       <span style={{ fontWeight: "bold" }}>
-                        {row.companyResult} {/* Company Result in bold */}
+                       {t('Type')}: {t('companyResult')}
                       </span>
                       <br />
                       <span
                         style={{ fontWeight: "bold", color: "green" }}
                       >
-                        Manual harvesting submitted{/* Green Bold Manual Harvesting */}
+                        {t('Manual harvesting submitted')}
                       </span>
                   </StyledTableCell>
                   <StyledTableCell>
                     {row.paymentAddress2}
                     <br />
-                    Network:
+                    {t('Network')}:
                   </StyledTableCell>
-                  <StyledTableCell>{row.internalSettlement}</StyledTableCell>
-                  <StyledTableCell>{row.merchantSettlement}</StyledTableCell>
+                  <StyledTableCell>
+                    {getSettlementStatus(row.internalSettlement)}
+                  </StyledTableCell>
+
+                  {/* Merchant Settlement Status */}
+                  <StyledTableCell>
+                    {getSettlementStatus(row.merchantSettlement)}
+                  </StyledTableCell>
+
                   <StyledTableCell
                     sx={{
                       position: "sticky",
@@ -169,7 +177,7 @@ const TransactionHistoryTable = ({
                     }}
                   >
                     <CustomActionButton size="small" color="tertiary">
-                      Internal Settlement
+                      {t('Internal Settlement')}
                     </CustomActionButton>
                   </StyledTableCell>
                 </StyledTableRow>
@@ -191,5 +199,3 @@ const TransactionHistoryTable = ({
 };
 
 export default TransactionHistoryTable;
-
-// TransactionHistoryTable;

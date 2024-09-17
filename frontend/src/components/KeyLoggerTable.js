@@ -14,6 +14,7 @@ import {
 import { styled } from "@mui/material/styles";
 import PaginationControls from "./PaginationControls.js";
 import EditIcon from "@mui/icons-material/Edit";
+import { useTranslation } from "react-i18next";  // Import useTranslation
 
 const headerBgColor = "#f5f5f5";
 const borderColor = "#e0e0e0";
@@ -22,9 +23,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   borderBottom: `1px solid ${borderColor}`,
   borderRight: `1px solid ${borderColor}`,
   whiteSpace: "nowrap",
-  padding: "12px 16px",
+  padding: "6px 8px",
   color: "#333",
-  fontSize: "14px",
+  fontSize: "13px",
 }));
 
 const StyledTableHeadCell = styled(StyledTableCell)({
@@ -61,48 +62,51 @@ const KeyloggerTable = ({
   totalItems,
   handleChangeRowsPerPage,
 }) => {
+  const { t } = useTranslation();  // Initialize translation hook
+
   return (
     <Paper sx={{ padding: "16px", backgroundColor: "#ffffff" }}>
-      <Typography variant="h6" sx={{ marginBottom: "16px", color: "#333" }}>
-        Keylogger
+      <Typography variant="h6" sx={{marginBottom: "16px",
+          color: "#666",
+          borderBottom: `1px solid ${borderColor}`,
+          paddingBottom: "8px", }}>
+        {t("Keylogger")} {/* Translated header */}
       </Typography>
       <Box sx={{ border: `1px solid ${borderColor}`, borderRadius: "4px" }}>
         <TableContainer>
           <Table sx={{ minWidth: 650 }} aria-label="keylogger table">
             <TableHead>
               <TableRow>
-                <StyledTableHeadCell>Device Information</StyledTableHeadCell>
-                <StyledTableHeadCell>User Information</StyledTableHeadCell>
-                <StyledTableHeadCell>Content/Related Tags</StyledTableHeadCell>
-                <StyledTableHeadCell>
-                  Application package name
-                </StyledTableHeadCell>
-                <StyledTableHeadCell>Notes Tags</StyledTableHeadCell>
-                <StyledTableHeadCell>Recording time</StyledTableHeadCell>
+                <StyledTableHeadCell>{t("Device Information")}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t("User Information")}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t("Content/Related Tags")}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t("Application package name")}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t("Notes Tags")}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t("Recording time")}</StyledTableHeadCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {rows.map((row, index) => (
                 <StyledTableRow key={index}>
                   <StyledTableCell>
-                    Device number: {row.deviceNumber}
+                    {t("Device number")}: {row.deviceNumber}
                     <br />
-                    Brand: {row.brand}
+                    {t("Brand")}: {row.brand}
                     <br />
-                    Model: {row.model}
+                    {t("Model")}: {row.model}
                     <br />
                   </StyledTableCell>
                   <StyledTableCell>
-                    User ID: {row.userId}
+                    {t("User ID")}: {row.userId}
                     <br />
-                    Account: {row.account}
+                    {t("Account")}: {row.account}
                     <br />
-                    Nickname: {row.nickname}
+                    {t("Nickname")}: {row.nickname}
                     <br />
                   </StyledTableCell>
                   <StyledTableCell>{row.content}</StyledTableCell>
                   <StyledTableCell>
-                    Type
+                    {t("Application package name")}
                     <br />
                     <span
                       style={{
@@ -117,7 +121,6 @@ const KeyloggerTable = ({
 
                   <StyledTableCell>
                     <IconBox>
-                      {" "}
                       <IconButton size="small">
                         <EditIcon fontSize="small" />
                       </IconButton>

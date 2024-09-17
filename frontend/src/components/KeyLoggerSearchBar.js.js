@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, TextField, Button,  Select, MenuItem } from "@mui/material";
+import { Box, TextField, Button, Select, MenuItem } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";  // Import useTranslation
 
 const textColor = "#666";
 
@@ -43,27 +44,48 @@ const StyledSelect = styled(Select)({
 });
 
 const SearchBar = () => {
+  const { t } = useTranslation();  // Initialize translation
+
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
-      <StyledTextField placeholder="Device Number" size="small" sx={{ width: 200 }} />
-      <StyledTextField placeholder="content" size="small" sx={{ width: 200 }} />
-      <StyledTextField placeholder="Related tags" size="small" sx={{ width: 200 }} />
-      <StyledTextField placeholder="Application package name" size="small" sx={{ width: 200 }} />
-      <StyledTextField placeholder="Tag Notes" size="small" sx={{ width: 200 }} />
-      
+      <StyledTextField 
+        placeholder={t("Device Number")}  // Translated placeholder
+        size="small" 
+        sx={{ width: 200 }} 
+      />
+      <StyledTextField 
+        placeholder={t("Content")}  // Translated placeholder
+        size="small" 
+        sx={{ width: 200 }} 
+      />
+      <StyledTextField 
+        placeholder={t("Related tags")}  // Translated placeholder
+        size="small" 
+        sx={{ width: 200 }} 
+      />
+      <StyledTextField 
+        placeholder={t("Application package name")}  // Translated placeholder
+        size="small" 
+        sx={{ width: 200 }} 
+      />
+      <StyledTextField 
+        placeholder={t("Tag Notes")}  // Translated placeholder
+        size="small" 
+        sx={{ width: 200 }} 
+      />
+
       <StyledSelect value="all" size="small" sx={{ width: 100 }}>
-        <MenuItem value="all">all</MenuItem>
-        <MenuItem value="Click">Click</MenuItem>
-        <MenuItem value="enter">enter</MenuItem>
+        <MenuItem value="all">{t("All")}</MenuItem>  {/* Translated option */}
+        <MenuItem value="Click">{t("Click")}</MenuItem>  {/* Translated option */}
+        <MenuItem value="enter">{t("Enter")}</MenuItem>  {/* Translated option */}
       </StyledSelect>
       
       <StyledButton variant="contained" size="small">
-        search
+        {t("Search")}  {/* Translated button */}
       </StyledButton>
       <StyledButton variant="outlined" size="small">
-        Reset
+        {t("Reset")}  {/* Translated button */}
       </StyledButton>
-      
     </Box>
   );
 };

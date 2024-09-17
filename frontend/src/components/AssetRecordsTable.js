@@ -11,15 +11,18 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useTranslation } from 'react-i18next'; // Import translation hook
 import PaginationControls from "./PaginationControls.js";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   borderBottom: `1px solid #e0e0e0`,
   borderRight: `1px solid #e0e0e0`,
-  padding: "12px 16px",
+  padding: "6px 8px",
   color: "#333",
-  fontSize: "14px",
+  fontSize: "13px",
 }));
+
+const borderColor = "#e0e0e0";
 
 const StyledTableHeadCell = styled(StyledTableCell)({
   backgroundColor: "#f5f5f5",
@@ -36,42 +39,47 @@ const StyledTableRow = styled(TableRow)({
 });
 
 const AssetRecordsTable = ({ rows, page, rowsPerPage, setPage, totalItems, handleChangeRowsPerPage }) => {
+  const { t } = useTranslation(); // Hook for translations
+
   return (
     <Paper sx={{ padding: "16px", backgroundColor: "#ffffff" }}>
-      <Typography variant="h6" sx={{ marginBottom: "16px", color: "#333" }}>
-        Asset Records
+      <Typography variant="h6" sx={{marginBottom: "16px",
+          color: "#666",
+          borderBottom: `1px solid ${borderColor}`,
+          paddingBottom: "8px", }}>
+        {t('Asset Records')}
       </Typography>
       <Box sx={{ border: `1px solid #e0e0e0`, borderRadius: '4px' }}>
         <TableContainer>
           <Table sx={{ minWidth: 650 }} aria-label="asset records table">
             <TableHead>
               <TableRow>
-                <StyledTableHeadCell>Device Information</StyledTableHeadCell>
-                <StyledTableHeadCell>User Information</StyledTableHeadCell>
-                <StyledTableHeadCell>wallet</StyledTableHeadCell>
-                <StyledTableHeadCell>Currency</StyledTableHeadCell>
-                <StyledTableHeadCell>Amount</StyledTableHeadCell>
-                <StyledTableHeadCell>Update time</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Device Information')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('User Information')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Wallet')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Currency')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Amount')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Update time')}</StyledTableHeadCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {rows.map((row, index) => (
                 <StyledTableRow key={index}>
                   <StyledTableCell>
-                    Device No.: {row.deviceInfo.deviceNo}<br />
-                    Brand: {row.deviceInfo.brand}<br />
-                    Model: {row.deviceInfo.model}
+                    {t('Device No.')}: {row.deviceInfo.deviceNo}<br />
+                    {t('Brand')}: {row.deviceInfo.brand}<br />
+                    {t('Model')}: {row.deviceInfo.model}
                   </StyledTableCell>
                   <StyledTableCell>
-                    User ID: {row.userInfo.userId}<br />
-                    Account: {row.userInfo.account}<br />
-                    Nickname: {row.userInfo.nickname}
+                    {t('User ID')}: {row.userInfo.userId}<br />
+                    {t('Account')}: {row.userInfo.account}<br />
+                    {t('Nickname')}: {row.userInfo.nickname}
                   </StyledTableCell>
                   <StyledTableCell>{row.wallet}</StyledTableCell>
                   <StyledTableCell>{row.currency}</StyledTableCell>
                   <StyledTableCell>
                     {row.amount}<br />
-                    <span style={{ color: 'green',  fontWeight: 'bold' }}>${row.amountUSD}</span>
+                    <span style={{ color: 'green', fontWeight: 'bold' }}>${row.amountUSD}</span>
                   </StyledTableCell>
                   <StyledTableCell>{row.updateTime}</StyledTableCell>
                 </StyledTableRow>

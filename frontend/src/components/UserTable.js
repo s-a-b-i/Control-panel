@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import PaginationControls from "./PaginationControls.js";
+import { useTranslation } from 'react-i18next';
 
 // Colors based on the image
 const headerBgColor = "#f5f5f5";
@@ -63,6 +64,8 @@ const StyledTableRow = styled(TableRow)(({ index }) => ({
 }));
 
 const UserTable = ({ rows, page, rowsPerPage, setPage, totalItems, handleChangeRowsPerPage }) => {
+  const { t } = useTranslation();
+
   return (
     <Paper
       sx={{
@@ -80,12 +83,12 @@ const UserTable = ({ rows, page, rowsPerPage, setPage, totalItems, handleChangeR
           paddingBottom: "8px",
         }}
       >
-        User List
+        {t('User List')}
       </Typography>
 
       <Box sx={{ border: `1px solid ${borderColor}`, borderRadius: '4px' }}>
         <TableContainer >
-          <Table stickyHeader sx={{ minWidth: 650, borderCollapse: "separate" }} size="small" aria-label="user table">
+          <Table stickyHeader sx={{ minWidth: 650, borderCollapse: "separate" }} size="small" aria-label={t('user table')}>
             <TableHead>
               <TableRow>
                 <StyledTableHeadCell
@@ -100,23 +103,23 @@ const UserTable = ({ rows, page, rowsPerPage, setPage, totalItems, handleChangeR
                 >
                   <GrayCheckbox />
                 </StyledTableHeadCell>
-                <StyledTableHeadCell>UserId</StyledTableHeadCell>
-                <StyledTableHeadCell>Nickname</StyledTableHeadCell>
-                <StyledTableHeadCell>Account</StyledTableHeadCell>
-                <StyledTableHeadCell>Parent UserId</StyledTableHeadCell>
-                <StyledTableHeadCell>Parent Nickname</StyledTableHeadCell>
-                <StyledTableHeadCell>Parent Account</StyledTableHeadCell>
-                <StyledTableHeadCell>Proxy UserId</StyledTableHeadCell>
-                <StyledTableHeadCell>Proxy Nickname</StyledTableHeadCell>
-                <StyledTableHeadCell>Proxy Account</StyledTableHeadCell>
-                <StyledTableHeadCell>Communication</StyledTableHeadCell>
-                <StyledTableHeadCell>Login Level</StyledTableHeadCell>
-                <StyledTableHeadCell>SMS Response</StyledTableHeadCell>
-                <StyledTableHeadCell>Account Balance</StyledTableHeadCell>
-                <StyledTableHeadCell>Registration Time</StyledTableHeadCell>
-                <StyledTableHeadCell>Online Status</StyledTableHeadCell>
-                <StyledTableHeadCell>Last Online Time</StyledTableHeadCell>
-                <StyledTableHeadCell>Last Offline Time</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('UserId')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Nickname')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Account')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Parent UserId')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Parent Nickname')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Parent Account')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Proxy UserId')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Proxy Nickname')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Proxy Account')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Communication')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Login Level')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('SMS Response')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Account Balance')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Registration Time')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Online Status')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Last Online Time')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Last Offline Time')}</StyledTableHeadCell>
                 <StyledTableHeadCell
                   sx={{
                     position: "sticky",
@@ -126,7 +129,7 @@ const UserTable = ({ rows, page, rowsPerPage, setPage, totalItems, handleChangeR
                     boxShadow: "-4px 0px 10px rgba(0, 0, 0, 0.1)",
                   }}
                 >
-                  Operations
+                  {t('Operations')}
                 </StyledTableHeadCell>
               </TableRow>
             </TableHead>
@@ -172,13 +175,13 @@ const UserTable = ({ rows, page, rowsPerPage, setPage, totalItems, handleChangeR
                     }}
                   >
                     <Box sx={{ display: "flex", flexWrap: "nowrap", gap: 0.5, paddingRight: "95px" }}>
-                      <CustomActionButton size="small">delete</CustomActionButton>
-                      <CustomActionButton size="small">Revise</CustomActionButton>
-                      <CustomActionButton size="small">Reset Password</CustomActionButton>
-                      <CustomActionButton size="small">title</CustomActionButton>
-                      <CustomActionButton size="small">Friend Management</CustomActionButton>
-                      <CustomActionButton size="small">Add Friend</CustomActionButton>
-                      <CustomActionButton size="small">Send Message</CustomActionButton>
+                      <CustomActionButton size="small">{t('delete')}</CustomActionButton>
+                      <CustomActionButton size="small">{t('Revise')}</CustomActionButton>
+                      <CustomActionButton size="small">{t('Reset Password')}</CustomActionButton>
+                      <CustomActionButton size="small">{t('title')}</CustomActionButton>
+                      <CustomActionButton size="small">{t('Friend Management')}</CustomActionButton>
+                      <CustomActionButton size="small">{t('Add Friend')}</CustomActionButton>
+                      <CustomActionButton size="small">{t('Send Message')}</CustomActionButton>
                     </Box>
                   </StyledTableCell>
                 </StyledTableRow>

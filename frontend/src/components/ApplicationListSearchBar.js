@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, TextField, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";  // Import useTranslation
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: "#2196f3",
@@ -26,19 +27,37 @@ const StyledTextField = styled(TextField)({
 });
 
 const SearchBar = () => {
+  const { t } = useTranslation();  // Initialize translation hook
+
   return (
     <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
-      <StyledTextField placeholder="Device Number" size="small" sx={{ width: 200 }} />
-      <StyledTextField placeholder="APP Name" size="small" sx={{ width: 200 }} />
-      <StyledTextField placeholder="Application package name" size="small" sx={{ width: 200 }} />
-      <StyledTextField placeholder="Tag Notes" size="small" sx={{ width: 200 }} />
+      <StyledTextField 
+        placeholder={t("Device Number")}  // Translated placeholder
+        size="small" 
+        sx={{ width: 200 }} 
+      />
+      <StyledTextField 
+        placeholder={t("APP Name")}  // Translated placeholder
+        size="small" 
+        sx={{ width: 200 }} 
+      />
+      <StyledTextField 
+        placeholder={t("Application package name")}  // Translated placeholder
+        size="small" 
+        sx={{ width: 200 }} 
+      />
+      <StyledTextField 
+        placeholder={t("Tag Notes")}  // Translated placeholder
+        size="small" 
+        sx={{ width: 200 }} 
+      />
       
       <StyledButton variant="contained" size="small">
-        search
+        {t("Search")}  {/* Translated button */}
       </StyledButton>
       
       <StyledButton variant="outlined" size="small">
-        Reset
+        {t("Reset")}  {/* Translated button */}
       </StyledButton>
     </Box>
   );

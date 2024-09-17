@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { ThemeProvider, CssBaseline } from '@mui/material';
+import { ThemeProvider, CssBaseline, FormControl, Select, MenuItem } from '@mui/material';
+import { I18nextProvider, useTranslation } from 'react-i18next';
 import { darkTheme, lightTheme } from './theme';
 import TopBar from './components/TopBar';
 import Sidebar from './components/Sidebar';
@@ -8,6 +9,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Users from './pages/Users';
 import PrivateRoute from './components/PrivateRoute';
+import i18n from './i18n';
 
 // Import new components for each page
 import ServerConfiguration from './pages/ServerConfiguration';
@@ -24,6 +26,7 @@ import AddressList from './pages/AddressList';
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const { t, i18n } = useTranslation();
 
   const toggleSidebar = () => {
     setSidebarOpen(prevState => !prevState);
@@ -32,6 +35,24 @@ function App() {
   const toggleTheme = () => {
     setIsDarkMode(prevState => !prevState);
   };
+
+  const changeLanguage = (event) => {
+    i18n.changeLanguage(event.target.value);
+  };
+
+  const LanguageSelector = () => (
+    <FormControl>
+      <Select
+        value={i18n.language}
+        onChange={changeLanguage}
+        sx={{ color: 'white', '& .MuiSelect-icon': { color: 'white' } }}
+      >
+        <MenuItem value="en">English</MenuItem>
+        <MenuItem value="zh">中文</MenuItem>
+      </Select>
+    </FormControl>
+  );
+
 
   const ProtectedLayout = ({ children }) => (
     <>
@@ -51,6 +72,7 @@ function App() {
   );
 
   return (
+    <I18nextProvider i18n={i18n}>
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <CssBaseline />
       <Router>
@@ -180,6 +202,7 @@ function App() {
         </Routes>
       </Router>
     </ThemeProvider>
+    </I18nextProvider>
   );
 }
 

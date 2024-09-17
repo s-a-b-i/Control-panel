@@ -9,10 +9,13 @@ import {
   Paper,
   Box,
   Typography,
+  IconButton,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import PaginationControls from "./PaginationControls.js";
-import CustomActionButton from "./CustomActionButton.js";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { useTranslation } from 'react-i18next';
+import PaginationControls from './PaginationControls';
 
 const headerBgColor = "#f5f5f5";
 const borderColor = "#e0e0e0";
@@ -21,9 +24,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   borderBottom: `1px solid ${borderColor}`,
   borderRight: `1px solid ${borderColor}`,
   whiteSpace: "nowrap",
-  padding: "12px 16px",
+  padding: "6px 8px",
   color: "#333",
-  fontSize: "14px",
+  fontSize: "13px",
 }));
 
 const StyledTableHeadCell = styled(StyledTableCell)({
@@ -42,53 +45,53 @@ const StyledTableRow = styled(TableRow)({
   },
 });
 
-const AddressListTable = ({
-  rows,
-  page,
-  rowsPerPage,
-  setPage,
-  totalItems,
-  handleChangeRowsPerPage,
-}) => {
+const AddressListTable = ({ rows, onDelete, onEdit , page, rowsPerPage, setPage, totalItems, handleChangeRowsPerPage }) => {
+  const { t } = useTranslation();
+
   return (
     <Paper sx={{ padding: "16px", backgroundColor: "#ffffff" }}>
-      <Typography variant="h6" sx={{ marginBottom: "16px", color: "#333" }}>
-        Address List
+      <Typography variant="h6" sx={{ marginBottom: "16px",
+          color: "#666",
+          borderBottom: `1px solid ${borderColor}`,
+          paddingBottom: "8px", }}>
+        {t('Address List')}
       </Typography>
       <Box sx={{ border: `1px solid ${borderColor}`, borderRadius: '4px' }}>
         <TableContainer>
           <Table sx={{ minWidth: 650 }} aria-label="address list table">
             <TableHead>
               <TableRow>
-                <StyledTableHeadCell>Currency</StyledTableHeadCell>
-                <StyledTableHeadCell>Address ciphertext</StyledTableHeadCell>
-                <StyledTableHeadCell>Address Tips</StyledTableHeadCell>
-                <StyledTableHeadCell>Address ...</StyledTableHeadCell>
-                <StyledTableHeadCell>Remark</StyledTableHeadCell>
-                <StyledTableHeadCell>Creation time</StyledTableHeadCell>
-                <StyledTableHeadCell>operate</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Currency')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Address ciphertext')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Address Tips')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Address Type')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Remark')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Creation time')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Operate')}</StyledTableHeadCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {rows.map((row, index) => (
-                <StyledTableRow key={index}>
-                  <StyledTableCell>{row.currency}</StyledTableCell>
-                  <StyledTableCell>{row.addressCiphertext}</StyledTableCell>
-                  <StyledTableCell>{row.addressTips}</StyledTableCell>
-                  <StyledTableCell>{row.addressType}</StyledTableCell>
-                  <StyledTableCell>{row.remark}</StyledTableCell>
-                  <StyledTableCell>{row.creationTime}</StyledTableCell>
-                  <StyledTableCell>
-                    <CustomActionButton size="small" color="primary">
-                      View
-                    </CustomActionButton>
-                  </StyledTableCell>
-                </StyledTableRow>
+                <StyledTableRow key={row._id}>
+                <StyledTableCell>{row.currency}</StyledTableCell>
+                <StyledTableCell>{row.addressCiphertext}</StyledTableCell>
+                <StyledTableCell>{row.addressTips}</StyledTableCell>
+                <StyledTableCell>{t(row.addressType)}</StyledTableCell>
+                <StyledTableCell>{row.remark}</StyledTableCell>
+                <StyledTableCell>{new Date(row.creationTime).toLocaleString()}</StyledTableCell>
+                <StyledTableCell>
+                  <IconButton onClick={() => onEdit(row)} size="small">
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton onClick={() => onDelete(row._id)} size="small">
+                    <DeleteIcon />
+                  </IconButton>
+                </StyledTableCell>
+              </StyledTableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-
         <PaginationControls
           page={page}
           rowsPerPage={rowsPerPage}

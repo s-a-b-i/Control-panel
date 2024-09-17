@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Paper,
   Typography,
@@ -51,22 +52,23 @@ const HeaderBox = styled(Box)(({ theme }) => ({
   // padding: theme.spacing(1),
 }));
 
-
 const ServerConfigForm = () => {
+  const { t } = useTranslation();
+
   return (
     <StyledPaper>
 
 <HeaderBox>
       <StyledBox>
-        <Typography>Parameter Description</Typography>
-        <Typography>Parameter Value</Typography>
-        <Typography>Parameter Description</Typography>
+        <Typography>{t('Parameter Description')}</Typography>
+        <Typography>{t('Parameter Value')}</Typography>
+        <Typography>{t('Parameter Description')}</Typography>
       </StyledBox>
       </HeaderBox>
       <StyledDivider />
 
       <StyledSubtitle variant="subtitle1" gutterBottom>
-        Server operation parameters:
+        {t('Server Operation Parameters:')}
       </StyledSubtitle>
 
       <StyledDivider />
@@ -75,10 +77,10 @@ const ServerConfigForm = () => {
       
 
       <StyledBox>
-        <Typography>Register a user account that becomes a friend by default</Typography>
+        <Typography>{t('Register a user account that becomes a friend by default')}</Typography>
         <TextField fullWidth />
         <Typography>
-          All newly registered users will be automatically added as friends, such as APP owners/administrators/customer service, etc. You can fill in multiple numbers, separated by commas. Note: Corresponding to the account in the third column of User Management
+          {t('All newly registered users will be automatically added as friends, such as APP owners/administrators/customer service, etc. You can fill in multiple numbers, separated by commas. Note: Corresponding to the account in the third column of User Management')}
         </Typography>
       </StyledBox>
 
@@ -86,10 +88,10 @@ const ServerConfigForm = () => {
 
 
       <StyledBox>
-        <Typography>Register the default group</Typography>
+        <Typography>{t('Register the default group')}</Typography>
         <TextField fullWidth />
         <Typography>
-          All newly registered users will automatically join the group ID. You can enter multiple values, separated by commas. Group Management - View Group ID in Modify Configuration
+          {t('All newly registered users will automatically join the group ID. You can enter multiple values, separated by commas. Group Management - View Group ID in Modify Configuration')}
         </Typography>
       </StyledBox>
 
@@ -97,9 +99,9 @@ const ServerConfigForm = () => {
 
 
       <StyledBox>
-        <Typography>Registration welcome message content</Typography>
+        <Typography>{t('Registration welcome message content')}</Typography>
         <TextField fullWidth defaultValue="Hi" multiline rows={2} />
-        <Typography>After registration, I received a message from the system customer service.</Typography>
+        <Typography>{t('After registration, I received a message from the system customer service.')}</Typography>
       </StyledBox>
 
       <StyledDivider />
@@ -107,86 +109,43 @@ const ServerConfigForm = () => {
 
       
       <StyledSubtitle variant="subtitle2" gutterBottom>
-      User default privacy settings: (unified default settings for newly registered users, users can set them individually in the client)
+      {t('User Default Privacy Settings: (unified default settings for newly registered users, users can set them individually in the client)')}
       </StyledSubtitle>
 
       <StyledDivider />
 
 
       <StyledBox>
-        <Typography>Default roaming duration</Typography>
+        <Typography>{t('Default Roaming Duration')}</Typography>
         <StyledFormControl>
-          <Select defaultValue="永久">
-            <MenuItem value="永久">永久</MenuItem>
+          <Select defaultValue="Permanent">
+            <MenuItem value="No Roaming">{t('No Roaming')}</MenuItem>
+          <MenuItem value="Permanent">{t('Permanent')}</MenuItem>
+            <MenuItem value="One Day">{t('One Day')}</MenuItem>
+            <MenuItem value="One Week">{t('One Week')}</MenuItem>
+            <MenuItem value="One Month">{t('One Month')}</MenuItem>
+            <MenuItem value="One Year">{t('One Year')}</MenuItem>
+            <MenuItem value="One Day">{t('One Day')}</MenuItem>
+            <MenuItem value="January">{t('January')}</MenuItem>
           </Select>
         </StyledFormControl>
-        <Typography>Similar to QQ message roaming</Typography>
+        <Typography>{t('Similar to QQ message roaming')}</Typography>
       </StyledBox>
 
       <StyledDivider />
 
 
       <StyledBox>
-        <Typography>Default expiration destruction time</Typography>
+        <Typography>{t('Default Expiration Destruction Time')}</Typography>
         <StyledFormControl>
-          <Select defaultValue="永久">
-            <MenuItem value="永久">永久</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography></Typography>
-      </StyledBox>
-
-      <StyledDivider />
-
-
-      <StyledBox>
-        <Typography>Is friend verification required?</Typography>
-        <StyledFormControl>
-          <Select defaultValue="是">
-            <MenuItem value="是">是</MenuItem>
-            <MenuItem value="否">否</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography></Typography>
-      </StyledBox>
-
-      <StyledDivider />
-
-
-      <StyledBox>
-        <Typography>Is XMPP encrypted?</Typography>
-        <StyledFormControl>
-          <Select defaultValue="是">
-            <MenuItem value="是">是</MenuItem>
-            <MenuItem value="否">否</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography>Whether the message is encrypted for transmission</Typography>
-      </StyledBox>
-
-      <StyledDivider />
-
-
-      <StyledBox>
-        <Typography>Whether to support multiple logins</Typography>
-        <StyledFormControl>
-          <Select defaultValue="否">
-            <MenuItem value="是">是</MenuItem>
-            <MenuItem value="否">否</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography>By default, the same account is restricted to single sign-on</Typography>
-      </StyledBox>
-
-      <StyledDivider />
-
-
-      <StyledBox>
-        <Typography>Whether to vibrate when a message comes in</Typography>
-        <StyledFormControl>
-          <Select defaultValue="是">
-            <MenuItem value="是">是</MenuItem>
-            <MenuItem value="否">否</MenuItem>
+          <Select defaultValue="Permanent">
+            <MenuItem value="Permanent">{t('Permanent')}</MenuItem>
+            <MenuItem value="One Day">{t('One Day')}</MenuItem>
+            <MenuItem value="One Week">{t('One Week')}</MenuItem>
+            <MenuItem value="One Month">{t('One Month')}</MenuItem>
+            <MenuItem value="One Year">{t('One Year')}</MenuItem>
+            <MenuItem value="Season">{t('Season')}</MenuItem>
+            <MenuItem value="January">{t('January')}</MenuItem>
           </Select>
         </StyledFormControl>
         <Typography></Typography>
@@ -196,11 +155,11 @@ const ServerConfigForm = () => {
 
 
       <StyledBox>
-        <Typography>Let the other party know that I am typing</Typography>
+        <Typography>{t('Is Friend Verification Required?')}</Typography>
         <StyledFormControl>
-          <Select defaultValue="开启">
-            <MenuItem value="开启">开启</MenuItem>
-            <MenuItem value="关闭">关闭</MenuItem>
+          <Select defaultValue="Yes">
+            <MenuItem value="Yes">{t('Yes')}</MenuItem>
+            <MenuItem value="No">{t('No')}</MenuItem>
           </Select>
         </StyledFormControl>
         <Typography></Typography>
@@ -210,53 +169,39 @@ const ServerConfigForm = () => {
 
 
       <StyledBox>
-        <Typography>Use Map Location</Typography>
+        <Typography>{t('Is XMPP Encrypted?')}</Typography>
         <StyledFormControl>
-          <Select defaultValue="关闭">
-            <MenuItem value="开启">开启</MenuItem>
-            <MenuItem value="关闭">关闭</MenuItem>
+          <Select defaultValue="Yes">
+            <MenuItem value="Yes">{t('Yes')}</MenuItem>
+            <MenuItem value="No">{t('No')}</MenuItem>
           </Select>
         </StyledFormControl>
-        <Typography>Location services require application of Baidu/Google Maps application certificates and are disabled by default</Typography>
+        <Typography>{t('Whether the message is encrypted for transmission')}</Typography>
       </StyledBox>
 
       <StyledDivider />
 
 
       <StyledBox>
-        <Typography>Allow me to be searched by account</Typography>
+        <Typography>{t('Whether to Support Multiple Logins')}</Typography>
         <StyledFormControl>
-          <Select defaultValue="开启">
-            <MenuItem value="开启">开启</MenuItem>
-            <MenuItem value="关闭">关闭</MenuItem>
+          <Select defaultValue="No">
+            <MenuItem value="Yes">{t('Yes')}</MenuItem>
+            <MenuItem value="No">{t('No')}</MenuItem>
           </Select>
         </StyledFormControl>
-        <Typography></Typography>
+        <Typography>{t('By default, the same account is restricted to single sign-on')}</Typography>
       </StyledBox>
 
       <StyledDivider />
 
 
       <StyledBox>
-        <Typography>Allow searching me by nickname</Typography>
+        <Typography>{t('Whether to Vibrate When a Message Comes In')}</Typography>
         <StyledFormControl>
-          <Select defaultValue="开启">
-            <MenuItem value="开启">开启</MenuItem>
-            <MenuItem value="关闭">关闭</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography></Typography>
-      </StyledBox>
-
-      <StyledDivider />
-
-
-      <StyledBox>
-        <Typography>Allow Android APP process to keep alive</Typography>
-        <StyledFormControl>
-          <Select defaultValue="开启">
-            <MenuItem value="开启">开启</MenuItem>
-            <MenuItem value="关闭">关闭</MenuItem>
+          <Select defaultValue="Yes">
+            <MenuItem value="Yes">{t('Yes')}</MenuItem>
+            <MenuItem value="No">{t('No')}</MenuItem>
           </Select>
         </StyledFormControl>
         <Typography></Typography>
@@ -266,10 +211,11 @@ const ServerConfigForm = () => {
 
 
       <StyledBox>
-        <Typography>Allow others to see when I was last online</Typography>
+        <Typography>{t('Let the Other Party Know That I Am Typing')}</Typography>
         <StyledFormControl>
-          <Select defaultValue="所有好友显示">
-            <MenuItem value="所有好友显示">所有好友显示</MenuItem>
+          <Select defaultValue="Open">
+            <MenuItem value="Open">{t('Open')}</MenuItem>
+            <MenuItem value="Close">{t('Close')}</MenuItem>
           </Select>
         </StyledFormControl>
         <Typography></Typography>
@@ -279,174 +225,258 @@ const ServerConfigForm = () => {
 
 
       <StyledBox>
-        <Typography>Allow others to see my account</Typography>
+        <Typography>{t('Use Map Location')}</Typography>
         <StyledFormControl>
-          <Select defaultValue="所有好友显示">
-            <MenuItem value="所有好友显示">所有好友显示</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography></Typography>
-      </StyledBox>
+        <Select defaultValue="Close">
+          <MenuItem value="Open">{t('Open')}</MenuItem>
+          <MenuItem value="Close">{t('Close')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography>{t('Location services require application of Baidu/Google Maps application certificates and are disabled by default')}</Typography>
+    </StyledBox>
 
-      <StyledDivider />
-
-
-  
-      <StyledSubtitle variant="subtitle2" gutterBottom>
-      Create group default parameter settings: (unified default settings for newly created group chats, group owners can modify them in the client)
-      </StyledSubtitle>
-
-      <StyledDivider />
+    <StyledDivider />
 
 
-      <StyledBox>
-        <Typography>Maximum number of people in a group</Typography>
-        <TextField fullWidth defaultValue="1000" />
-        <Typography></Typography>
-      </StyledBox>
+    <StyledBox>
+      <Typography>{t('Allow Me to Be Searched by Account')}</Typography>
+      <StyledFormControl>
+        <Select defaultValue="Open">
+          <MenuItem value="Open">{t('Open')}</MenuItem>
+          <MenuItem value="Close">{t('Close')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
 
-      <StyledDivider />
-
-
-      <StyledBox>
-        <Typography>Is this a private group?</Typography>
-        <StyledFormControl>
-          <Select defaultValue="是">
-            <MenuItem value="是">是</MenuItem>
-            <MenuItem value="否">否</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography></Typography>
-      </StyledBox>
-
-      <StyledDivider />
+    <StyledDivider />
 
 
-      <StyledBox>
-        <Typography>Whether to display the number of readers</Typography>
-        <StyledFormControl>
-          <Select defaultValue="否">
-            <MenuItem value="是">是</MenuItem>
-            <MenuItem value="否">否</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography></Typography>
-      </StyledBox>
+    <StyledBox>
+      <Typography>{t('Allow Searching Me by Nickname')}</Typography>
+      <StyledFormControl>
+        <Select defaultValue="Open">
+          <MenuItem value="Open">{t('Open')}</MenuItem>
+          <MenuItem value="Close">{t('Close')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
 
-      <StyledDivider />
-
-
-      <StyledBox>
-        <Typography>Whether to enable group invitation confirmation</Typography>
-        <StyledFormControl>
-          <Select defaultValue="关闭">
-            <MenuItem value="开启">开启</MenuItem>
-            <MenuItem value="关闭">关闭</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography></Typography>
-      </StyledBox>
-
-      <StyledDivider />
+    <StyledDivider />
 
 
-      <StyledBox>
-        <Typography>Send notification when group members are reduced</Typography>
-        <StyledFormControl>
-          <Select defaultValue="开启">
-            <MenuItem value="开启">开启</MenuItem>
-            <MenuItem value="关闭">关闭</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography></Typography>
-      </StyledBox>
+    <StyledBox>
+      <Typography>{t('Allow Android APP Process to Keep Alive')}</Typography>
+      <StyledFormControl>
+        <Select defaultValue="Open">
+          <MenuItem value="Open">{t('Open')}</MenuItem>
+          <MenuItem value="Closure">{t('Closure')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
 
-      <StyledDivider />
-
-
-      <StyledBox>
-        <Typography>Is it allowed to display group members?</Typography>
-        <StyledFormControl>
-          <Select defaultValue="是">
-            <MenuItem value="是">是</MenuItem>
-            <MenuItem value="否">否</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography></Typography>
-      </StyledBox>
-
-      <StyledDivider />
+    <StyledDivider />
 
 
-      <StyledBox>
-        <Typography>Whether to allow ordinary members to chat privately</Typography>
-        <StyledFormControl>
-          <Select defaultValue="是">
-            <MenuItem value="是">是</MenuItem>
-            <MenuItem value="否">否</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography></Typography>
-      </StyledBox>
+    <StyledBox>
+      <Typography>{t('Allow Others to See When I Was Last Online')}</Typography>
+      <StyledFormControl>
+        <Select value="All friends Show">
+          <MenuItem value="All friends Show">{t('All friends Show')}</MenuItem>
+          <MenuItem value="Now one is shown">{t('Now one is shown')}</MenuItem>
+          <MenuItem value="Mobile Phone contacts display">{t('Mobile Phone contacts display')}</MenuItem>
+          <MenuItem value="Show to Everyone">{t('Show to Everyone')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
 
-      <StyledDivider />
-
-
-      <StyledBox>
-        <Typography>Whether to allow ordinary members to invite friends</Typography>
-        <StyledFormControl>
-          <Select defaultValue="是">
-            <MenuItem value="是">是</MenuItem>
-            <MenuItem value="否">否</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography></Typography>
-      </StyledBox>
-
-      <StyledDivider />
+    <StyledDivider />
 
 
-      <StyledBox>
-        <Typography>Whether to allow ordinary members to upload group shared files</Typography>
-        <StyledFormControl>
-          <Select defaultValue="否">
-            <MenuItem value="是">是</MenuItem>
-            <MenuItem value="否">否</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography></Typography>
-      </StyledBox>
+    <StyledBox>
+      <Typography>{t('Allow Others to See My Account')}</Typography>
+      <StyledFormControl>
+        <Select value="All friends Show">
+          <MenuItem value="All friends Show">{t('All friends Show')}</MenuItem>
+          <MenuItem value="Now one is shown">{t('Now one is shown')}</MenuItem>
+          <MenuItem value="Mobile Phone contacts display">{t('Mobile Phone contacts display')}</MenuItem>
+          <MenuItem value="Show to Everyone">{t('Show to Everyone')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
+
+    <StyledDivider />
 
 
-      <StyledDivider />
+    <StyledSubtitle variant="subtitle2" gutterBottom>
+      {t('Create Group Default Parameter Settings: (unified default settings for newly created group chats, group owners can modify them in the client)')}
+    </StyledSubtitle>
+
+    <StyledDivider />
 
 
-      <StyledBox>
-        <Typography>Whether to allow ordinary members to leave the group</Typography>
-        <StyledFormControl>
-          <Select defaultValue="是">
-            <MenuItem value="是">是</MenuItem>
-            <MenuItem value="否">否</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography></Typography>
-      </StyledBox>
+    <StyledBox>
+      <Typography>{t('Maximum Number of People in a Group')}</Typography>
+      <TextField fullWidth defaultValue="1000" />
+      <Typography></Typography>
+    </StyledBox>
 
-      <StyledDivider />
+    <StyledDivider />
 
 
-      <StyledBox>
-        <Typography>Whether to allow ordinary members to initiate lectures</Typography>
-        <StyledFormControl>
-          <Select defaultValue="否">
-            <MenuItem value="是">是</MenuItem>
-            <MenuItem value="否">否</MenuItem>
-          </Select>
-        </StyledFormControl>
-        <Typography></Typography>
-      </StyledBox>
-    </StyledPaper>
-  );
-};
+    <StyledBox>
+      <Typography>{t('Is this a private group?')}</Typography>
+      <StyledFormControl>
+        <Select defaultValue="Yes">
+          <MenuItem value="Yes">{t('Yes')}</MenuItem>
+          <MenuItem value="No">{t('No')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
+
+    <StyledDivider />
+
+
+    <StyledBox>
+      <Typography>{t('Whether to Display the Number of Readers')}</Typography>
+      <StyledFormControl>
+        <Select defaultValue="No">
+          <MenuItem value="Clouser">{t('Clouser')}</MenuItem>
+          <MenuItem value="Cpen">{t('Cpen')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
+
+    <StyledDivider />
+
+
+    <StyledBox>
+      <Typography>{t('Whether to Enable Group Invitation Confirmation')}</Typography>
+      <StyledFormControl>
+        <Select defaultValue="Close">
+          <MenuItem value="Yes">{t('Yes')}</MenuItem>
+          <MenuItem value="No">{t('No')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
+
+    <StyledDivider />
+
+
+    <StyledBox>
+      <Typography>{t('Send Notification when Group Members are Reduced')}</Typography>
+      <StyledFormControl>
+        <Select defaultValue="Open">
+          <MenuItem value="Yes">{t('Yes')}</MenuItem>
+          <MenuItem value="No">{t('No')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
+
+    <StyledDivider />
+
+
+    <StyledBox>
+      <Typography>{t('Is it allowed to display group members?')}</Typography>
+      <StyledFormControl>
+        <Select defaultValue="Yes">
+          <MenuItem value="Yes">{t('Yes')}</MenuItem>
+          <MenuItem value="No">{t('No')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
+
+    <StyledDivider />
+
+
+    <StyledBox>
+      <Typography>{t('Whether to Allow Ordinary Members to Chat Privately')}</Typography>
+      <StyledFormControl>
+        <Select defaultValue="Yes">
+          <MenuItem value="Yes">{t('Yes')}</MenuItem>
+          <MenuItem value="No">{t('No')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
+
+    <StyledDivider />
+
+
+    <StyledBox>
+      <Typography>{t('Whether to Allow Ordinary Members to Invite Friends')}</Typography>
+      <StyledFormControl>
+        <Select defaultValue="Yes">
+          <MenuItem value="Yes">{t('Yes')}</MenuItem>
+          <MenuItem value="No">{t('No')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
+
+    <StyledDivider />
+
+
+    <StyledBox>
+      <Typography>{t('Whether to Allow Ordinary Members to Upload Group Shared Files')}</Typography>
+      <StyledFormControl>
+        <Select defaultValue="No">
+          <MenuItem value="Yes">{t('Yes')}</MenuItem>
+          <MenuItem value="No">{t('No')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
+
+    <StyledDivider />
+
+
+    <StyledBox>
+      <Typography>{t('Whether to Allow Ordinary Members to Leave the Group')}</Typography>
+      <StyledFormControl>
+        <Select defaultValue="Yes">
+          <MenuItem value="Yes">{t('Yes')}</MenuItem>
+          <MenuItem value="No">{t('No')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
+
+    <StyledDivider />
+
+
+    <StyledBox>
+      <Typography>{t('Whether to Allow Ordinary Members to Initiate Lectures')}</Typography>
+      <StyledFormControl>
+      <Select defaultValue="No">
+          <MenuItem value="Yes">{t('Yes')}</MenuItem>
+          <MenuItem value="No">{t('No')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
+    <StyledBox>
+      <Typography>{t('Whether to Allow Ordinary Members to Initiate Lectures')}</Typography>
+      <StyledFormControl>
+        <Select defaultValue="No">
+          <MenuItem value="Yes">{t('Yes')}</MenuItem>
+          <MenuItem value="No">{t('No')}</MenuItem>
+        </Select>
+      </StyledFormControl>
+      <Typography></Typography>
+    </StyledBox>
+  </StyledPaper>
+);
+
+}
 
 export default ServerConfigForm;

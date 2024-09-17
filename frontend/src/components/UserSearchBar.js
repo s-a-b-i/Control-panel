@@ -1,6 +1,16 @@
-import React from "react";
-import { Box, TextField, Button, Typography, Select, MenuItem } from "@mui/material";
+import React, { useState } from "react";
+import { 
+  Box, 
+  TextField, 
+  Button, 
+  Typography, 
+  Select, 
+  MenuItem, 
+  Popover 
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useTranslation } from 'react-i18next'; // Import the useTranslation hook
+import Calendar from "./Calendar"; // Ensure the Calendar path is correct
 
 const textColor = "#666";
 
@@ -43,41 +53,78 @@ const StyledSelect = styled(Select)({
   },
 });
 
-// Main SearchBar component
 const SearchBar = () => {
+  const { t } = useTranslation(); // Initialize the useTranslation hook
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [registrationTimeFrame, setRegistrationTimeFrame] = useState("");
+
+  const handleCalendarOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCalendarClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDateSelect = (newDate) => {
+    setSelectedDate(newDate);
+    setRegistrationTimeFrame(`${newDate.toLocaleDateString()}`); // Format as needed
+    setAnchorEl(null); // Close the popover after selection
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "registration-timeframe-popover" : undefined;
+
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
       <StyledSelect value="" displayEmpty size="small" sx={{ width: 200 }}>
         <MenuItem value="" disabled>
-          Please select online status
+          {t('Please select online status')}
         </MenuItem>
-        <MenuItem value="online">Online</MenuItem>
-        <MenuItem value="offline">Offline</MenuItem>
+        <MenuItem value="online">{t('Online')}</MenuItem>
+        <MenuItem value="offline">{t('Offline')}</MenuItem>
       </StyledSelect>
       
-      <StyledTextField placeholder="Enter user ID/nickname/account" size="small" sx={{ width: 200 }} />
-      <StyledTextField placeholder="Parent user ID (inviter)" size="small" sx={{ width: 200 }} />
-      <StyledTextField placeholder="Proxy User Id" size="small" sx={{ width: 200 }} />
+      <StyledTextField placeholder={t('Enter user ID/nickname/account')} size="small" sx={{ width: 200 }} />
+      <StyledTextField placeholder={t('Parent user ID (inviter)')} size="small" sx={{ width: 200 }} />
+      <StyledTextField placeholder={t('Proxy User Id')} size="small" sx={{ width: 250 }} />
       
-      {/* New Registration time frame input */}
-      <StyledButton variant="contained" size="small">
-        search
-      </StyledButton>
-      <StyledButton variant="contained" size="small">
-        Added
-      </StyledButton>
+      {/* New Registration time frame input with Calendar */}
       <Typography sx={{ color: textColor, alignSelf: 'center' }}>
-        Registration time frame:
+        {t('Registration time frame')}:
       </Typography>
-      <StyledSelect value="" displayEmpty size="small" sx={{ width: 200 }}>
-        <MenuItem value="" disabled>
-          Please select a time range
-        </MenuItem>
-        <MenuItem value="today">Today</MenuItem>
-        <MenuItem value="last_7_days">Last 7 Days</MenuItem>
-        <MenuItem value="last_30_days">Last 30 Days</MenuItem>
-        <MenuItem value="custom">Custom Range</MenuItem>
-      </StyledSelect>
+      <StyledTextField
+        placeholder={t('Select a time range')}
+        size="small"
+        value={registrationTimeFrame}
+        onClick={handleCalendarOpen}
+        sx={{ width: 200 }}
+        readOnly
+      />
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleCalendarClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <Calendar
+          dueDate={new Date()} // You can customize the max selectable date
+          onDateSelect={handleDateSelect}
+          selectedDate={selectedDate}
+        />
+      </Popover>
+
+      <StyledButton variant="contained" size="small">
+        {t('Search')}
+      </StyledButton>
+      <StyledButton variant="contained" size="small">
+        {t('Added')}
+      </StyledButton>
     </Box>
   );
 };

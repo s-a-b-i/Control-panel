@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Box, 
   Card, 
@@ -9,59 +10,92 @@ import {
   MenuItem, 
   FormControl, 
   InputLabel,
-  TextField
+  TextField,
+  Popover,
 } from '@mui/material';
 import { 
   LineChart, 
   Line, 
   XAxis, 
   YAxis, 
-  CartesianGrid, 
   Tooltip, 
   ResponsiveContainer 
 } from 'recharts';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { format } from 'date-fns';
+import Calendar from '../components/Calendar'; // Ensure this path is correct
 
-const generateRandomData = (count) => {
+// Helper function to generate random data
+const generateRandomData = (count, startDate) => {
   return Array.from({ length: count }, (_, i) => ({
-    date: new Date(2024, 3 + Math.floor(i / 30), 1 + (i % 30)), // Now storing Date object
-    value: Math.floor(Math.random() * 10)
+    date: new Date(startDate.getTime() + i * 24 * 60 * 60 * 1000),
+    value: Math.floor(Math.random() * 12)
   }));
 };
 
 const Dashboard = () => {
-  const [unit, setUnit] = useState('sky'); // Default to 'Sky'
-  const [startDate, setStartDate] = useState(new Date(2024, 3, 1)); // Starting date
-
+  const { t } = useTranslation();
+  const [unit, setUnit] = useState('sky');
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [tempDate, setTempDate] = useState(selectedDate);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [timeSpent, setTimeSpent] = useState('');
+  
   const cardData = [
-    { title: 'Total Users', value: Math.floor(Math.random() * 10000) },
-    { title: 'Active Sessions', value: Math.floor(Math.random() * 1000) },
-    { title: 'Revenue', value: `$${(Math.random() * 10000).toFixed(2)}` },
-    { title: 'Conversion Rate', value: `${(Math.random() * 100).toFixed(2)}%` },
+    { title: t('Total no of users'), value: 1185 },
+    { title: t('Total no of groups'), value: 3 },
+    { title: t('Total no of chat messages'), value: 38 },
+    { title: t('Total no of friends added'), value: 576 },
   ];
 
-  const graphData = {
-    users: generateRandomData(180),
-    sessions: generateRandomData(180),
-    revenue: generateRandomData(180),
-    conversions: generateRandomData(180),
-    engagement: generateRandomData(180),
+  const [graphData, setGraphData] = useState({
+    users: generateRandomData(180, selectedDate),
+    sessions: generateRandomData(180, selectedDate),
+    revenue: generateRandomData(180, selectedDate),
+    conversions: generateRandomData(180, selectedDate),
+    engagement: generateRandomData(180, selectedDate),
+  });
+
+  const handleDateChange = (newDate) => {
+    setTempDate(newDate);
+    setTimeSpent(format(newDate, 'yyyy-MM-dd'));
   };
 
+  const handleConfirmDate = (confirmedDate) => {
+    setSelectedDate(confirmedDate);
+    setGraphData({
+      users: generateRandomData(180, confirmedDate),
+      sessions: generateRandomData(180, confirmedDate),
+      revenue: generateRandomData(180, confirmedDate),
+      conversions: generateRandomData(180, confirmedDate),
+      engagement: generateRandomData(180, confirmedDate),
+    });
+    setAnchorEl(null);
+  };
+
+  const handleTimeSpentClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseCalendar = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
   return (
-    <Box sx={{ flexGrow: 1, p: 3, bgcolor: '#f5f5f5' }}>
-      <Grid container spacing={3} sx={{ mb: 3 }}>
+    <Box sx={{ margin: '10px 40px', minWidth: '650px', flexGrow: 1, p: 3, bgcolor: '#f5f5f5' }}>
+      
+      <Grid container spacing={2} sx={{ mb: 4 }}>
         {cardData.map((card, index) => (
           <Grid item xs={12} sm={6} md={3} key={index}>
-            <Card>
+            <Card sx={{ bgcolor: '#ffffff', borderRadius: '10px' }}>
               <CardContent>
-                <Typography variant="h6" component="div">
+                <Typography variant="h8" component="div">
                   {card.title}
                 </Typography>
-                <Typography variant="h4" component="div">
+                <hr style={{ borderColor: '#f8f8f8', borderWidth: 1, margin: '8px 0' }} />
+                <Typography variant="h4" component="div" color='#606060'>
                   {card.value}
                 </Typography>
               </CardContent>
@@ -70,55 +104,74 @@ const Dashboard = () => {
         ))}
       </Grid>
 
-      <Box sx={{ mb: 3 }}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DatePicker
-            label="Start Date"
-            value={startDate}
-            onChange={(newValue) => setStartDate(newValue)}
-            renderInput={(params) => <TextField {...params} sx={{ mr: 2 }} />}
+      <Box sx={{ mb: 2, bgcolor: '#ffffff', p: 3, borderRadius: '10px' }}>
+        <TextField
+          label={t('Time Range')}
+          value={timeSpent}
+          onClick={handleTimeSpentClick}
+          sx={{ mr: 2 }}
+        />
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleCloseCalendar}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+        >
+          <Calendar 
+            dueDate={new Date()} 
+            onDateSelect={handleDateChange}
+            selectedDate={tempDate}
+            onConfirm={handleConfirmDate}
           />
-        </LocalizationProvider>
+        </Popover>
 
         <FormControl sx={{ minWidth: 120 }}>
-          <InputLabel>Unit</InputLabel>
+          <InputLabel>{t('Unit')}</InputLabel>
           <Select
             value={unit}
-            label="Unit"
+            label={t('Unit')}
             onChange={(e) => setUnit(e.target.value)}
           >
-            <MenuItem value="moon">Moon</MenuItem>
-            <MenuItem value="sky">Sky</MenuItem>
-            <MenuItem value="hour">Hour</MenuItem>
-            <MenuItem value="minute">Minute</MenuItem>
+            <MenuItem value="moon">{t('Moon')}</MenuItem>
+            <MenuItem value="sky">{t('Sky')}</MenuItem>
+            <MenuItem value="hour">{t('Hour')}</MenuItem>
+            <MenuItem value="minute">{t('Minute')}</MenuItem>
           </Select>
         </FormControl>
       </Box>
-
+      
       <Grid container spacing={3}>
         {Object.entries(graphData).map(([key, data], index) => (
           <Grid item xs={12} key={index}>
-            <Card sx={{ bgcolor: '#ffffff' }}>
-              <CardContent>
-                <Typography variant="h6" component="div" sx={{ mb: 2 }}>
-                  {key.charAt(0).toUpperCase() + key.slice(1)} Over Time
-                </Typography>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="date" 
-                      tickFormatter={(tick) => format(tick, 'yyyy-MM-dd')} // Format Date object
-                    />
-                    <YAxis />
-                    <Tooltip 
-                      labelFormatter={(label) => format(label, 'yyyy-MM-dd')} // Format Date object
-                    />
-                    <Line type="monotone" dataKey="value" stroke="#C70039" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
+            <Box sx={{ bgcolor: '#ffffff', p: 3, borderRadius: '10px' }}>
+              <Card sx={{ bgcolor: '#f8f8f8', borderRadius: '10px' }}>
+                <CardContent>
+                  <Typography variant="h6" component="div" sx={{ mb: 2 }}>
+                    {t(`${key.charAt(0).toUpperCase() + key.slice(1)} Over Time`)}
+                  </Typography>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <LineChart data={data}>
+                      <XAxis 
+                        dataKey="date" 
+                        tickFormatter={(tick) => format(tick, 'yyyy-MM-dd')}
+                      />
+                      <YAxis 
+                        ticks={[0, 2, 4, 6, 8, 10, 12]}
+                        domain={[0, 12]}
+                      />
+                      <Tooltip 
+                        labelFormatter={(label) => format(label, 'yyyy-MM-dd')}
+                      />
+                      <Line type="monotone" dataKey="value" stroke="#C70039" />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+            </Box>
           </Grid>
         ))}
       </Grid>

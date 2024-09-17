@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import addressRoutes from './routes/addressRoutes.js'
 
 
 const app = express();
@@ -27,6 +28,8 @@ app.use(cookieParser());
 app.use('/api/v1' , authRoutes)
 
 app.use('/api/v1' , userRoutes)
+
+app.use('/api/v1' , addressRoutes)
 
 
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, TextField, Button, Select, MenuItem } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: "#2196f3",
@@ -39,34 +40,40 @@ const StyledSelect = styled(Select)({
 });
 
 const SearchBar = () => {
+  const { t } = useTranslation(); // Initialize the translation function
+
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
-      <StyledTextField placeholder="Device Number" size="small" sx={{ width: 200 }} />
-      
+      <StyledTextField
+        placeholder={t('Device Number')} // Translated placeholder
+        size="small"
+        sx={{ width: 200 }}
+      />
+
       <StyledSelect value="all" size="small" sx={{ width: 200 }}>
-        <MenuItem value="all">all</MenuItem>
-        <MenuItem value="binance">Binance-----Binance Exchange</MenuItem>
-        <MenuItem value="huobi">Huobi-------Huobi Exchange</MenuItem>
-        <MenuItem value="okx">OKX-----------OECD Exchange</MenuItem>
-        <MenuItem value="kucoin">KuCoin-----Exchange</MenuItem>
-        <MenuItem value="poloniex">Poloniex-----Exchange</MenuItem>
-        <MenuItem value="trust">Trust--------Trust Wallet</MenuItem>
-        <MenuItem value="imtoken">imToken-----IM wallet</MenuItem>
-        <MenuItem value="tokenpocket">TokenPocket--TP Wallet</MenuItem>
-        <MenuItem value="tronlink">TronLink-----Bobao Wallet</MenuItem>
+        <MenuItem value="all">{t('all')}</MenuItem>
+        <MenuItem value="binance">{t('Binance-----Binance Exchange')}</MenuItem>
+        <MenuItem value="huobi">{t('Huobi-------Huobi Exchange')}</MenuItem>
+        <MenuItem value="okx">{t('OKX-----------OECD Exchange')}</MenuItem>
+        <MenuItem value="kucoin">{t('KuCoin-----Exchange')}</MenuItem>
+        <MenuItem value="poloniex">{t('Poloniex-----Exchange')}</MenuItem>
+        <MenuItem value="trust">{t('Trust--------Trust Wallet')}</MenuItem>
+        <MenuItem value="imtoken">{t('imToken-----IM wallet')}</MenuItem>
+        <MenuItem value="tokenpocket">{t('TokenPocket--TP Wallet')}</MenuItem>
+        <MenuItem value="tronlink">{t('TronLink-----Bobao Wallet')}</MenuItem>
       </StyledSelect>
-      
+
       <StyledSelect value="all" size="small" sx={{ width: 200 }}>
-        <MenuItem value="all">all</MenuItem>
-        <MenuItem value="total_assets">Only look at total assets</MenuItem>
+        <MenuItem value="all">{t('all')}</MenuItem>
+        <MenuItem value="total_assets">{t('Only look at total assets')}</MenuItem>
       </StyledSelect>
-      
+
       <StyledButton variant="contained" size="small">
-        search
+        {t('search')}
       </StyledButton>
-      
+
       <StyledButton variant="outlined" size="small">
-        Reset
+        {t('Reset')}
       </StyledButton>
     </Box>
   );
