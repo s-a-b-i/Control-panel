@@ -9,10 +9,13 @@ import {
   Paper,
   Box,
   Typography,
+  IconButton,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import PaginationControls from "./PaginationControls.js";
-import { useTranslation } from "react-i18next"; // Import useTranslation
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { useTranslation } from 'react-i18next';
+import PaginationControls from './PaginationControls';
 
 const headerBgColor = "#f5f5f5";
 const borderColor = "#e0e0e0";
@@ -34,24 +37,16 @@ const StyledTableHeadCell = styled(StyledTableCell)({
 });
 
 const StyledTableRow = styled(TableRow)({
-  "&:nth-of-type(odd)": {
+  '&:nth-of-type(odd)': {
     backgroundColor: "#fff",
   },
-  "&:nth-of-type(even)": {
+  '&:nth-of-type(even)': {
     backgroundColor: "#f9f9f9",
   },
 });
 
-const TriggeringRulesTable = ({
-  rows,
-  page,
-  rowsPerPage,
-  setPage,
-  totalItems,
-  
-  handleChangeRowsPerPage,
-}) => {
-  const { t } = useTranslation(); // Initialize translation
+const TriggeringRulesTable = ({ rows, onDelete, onEdit, page, rowsPerPage, setPage, totalItems, handleChangeRowsPerPage }) => {
+  const { t } = useTranslation();
 
   return (
     <Paper sx={{ padding: "16px", backgroundColor: "#ffffff" }}>
@@ -59,28 +54,33 @@ const TriggeringRulesTable = ({
           color: "#666",
           borderBottom: `1px solid ${borderColor}`,
           paddingBottom: "8px", }}>
-        {t("Triggering rules")} {/* Translated header */}
+        {t('Triggering Rules')}
       </Typography>
-      <Box sx={{ border: `1px solid ${borderColor}`, borderRadius: "4px" }}>
+      <Box sx={{ border: `1px solid ${borderColor}`, borderRadius: '4px' }}>
         <TableContainer>
           <Table sx={{ minWidth: 650 }} aria-label="triggering rules table">
             <TableHead>
               <TableRow>
-                <StyledTableHeadCell>{t("Device Number")}</StyledTableHeadCell>
-                <StyledTableHeadCell>
-                  {t("Units of measure...")}
-                </StyledTableHeadCell>
-                <StyledTableHeadCell>{t("Trigger Amount")}</StyledTableHeadCell>
-                <StyledTableHeadCell>{t("Operate")}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Device Number')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Units of Measure')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Trigger Amount')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Operate')}</StyledTableHeadCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row, index) => (
-                <StyledTableRow key={index}>
-                  <StyledTableCell>{t("Global Default")}</StyledTableCell>
+              {rows.map((row) => (
+                <StyledTableRow key={row._id}>
+                  <StyledTableCell>{row.deviceNumber}</StyledTableCell>
                   <StyledTableCell>{row.unitsOfMeasure}</StyledTableCell>
                   <StyledTableCell>{row.triggerAmount}</StyledTableCell>
-                  <StyledTableCell>{row.operate}</StyledTableCell>
+                  <StyledTableCell>
+                    <IconButton onClick={() => onEdit(row)} size="small">
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton onClick={() => onDelete(row._id)} size="small">
+                      <DeleteIcon />
+                    </IconButton>
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>

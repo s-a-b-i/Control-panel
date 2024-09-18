@@ -18,24 +18,27 @@ import { useTranslation } from 'react-i18next';
 
 const StyledDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialog-paper': {
-    width: '400px',
+    width: '600px', // Increased width
     maxWidth: '100%',
-    height: '400px',
+    height: '500px', // Increased height
     maxHeight: '100%',
+    borderRadius: '16px', // Rounded corners
   },
 }));
 
 const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.primary.contrastText,
+  borderTopLeftRadius: '16px', // Apply rounded corners to the top-left
+  borderTopRightRadius: '16px', // Apply rounded corners to the top-right
 }));
 
 const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
-  padding: theme.spacing(2),
+  padding: theme.spacing(3), // Increased padding for a more spacious feel
 }));
 
 const StyledFormControl = styled(FormControl)(({ theme }) => ({
-  marginBottom: theme.spacing(2),
+  marginBottom: theme.spacing(3), // Increased spacing between form controls
   width: '100%',
 }));
 

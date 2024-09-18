@@ -18,7 +18,7 @@ const AddressListPage = () => {
 
   useEffect(() => {
     fetchAddressList();
-  }, );
+  }, [searchParams]);
 
   const fetchAddressList = async () => {
     setIsLoading(true);

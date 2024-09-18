@@ -598,6 +598,11 @@ i18n
           Sure: "确定",
           "Total {{totalItems}} items": "共 {{totalItems}} 条",
           "{{option}} items/page": "每页 {{option}} 条",
+
+
+          "ADD": "添加",
+  "Add New Address": "添加新地址",
+  "Cancel": "取消"
         },
       },
     },

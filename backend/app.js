@@ -5,6 +5,8 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import addressRoutes from './routes/addressRoutes.js'
+import triggeringRulesRoutes from './routes/triggeringRulesRoutes.js'
+import applicationRoutes from './routes/applicationRoutes.js'
 
 
 const app = express();
@@ -31,6 +33,10 @@ app.use('/api/v1' , userRoutes)
 
 app.use('/api/v1' , addressRoutes)
 
+
+app.use('/api/v1' , triggeringRulesRoutes)
+
+app.use('/api/v1' , applicationRoutes)
 
 
 export { app };

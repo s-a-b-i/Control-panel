@@ -1,13 +1,13 @@
-import React from "react";
-import { Box, TextField, Button, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, TextField, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useTranslation } from "react-i18next";  // Import useTranslation
+import { useTranslation } from 'react-i18next';
 
 const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: "#2196f3",
+  backgroundColor: theme.palette.primary.main,
   color: "white",
   "&:hover": {
-    backgroundColor: "#1976d2",
+    backgroundColor: theme.palette.primary.dark,
   },
 }));
 
@@ -26,27 +26,36 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const SearchBar = () => {
-  const { t } = useTranslation();  // Initialize translation
+const TriggeringRulesSearchBar = ({ onSearch, onReset }) => {
+  const { t } = useTranslation();
+  const [deviceNumber, setDeviceNumber] = useState("");
+
+  const handleSearch = () => {
+    onSearch({ deviceNumber });
+  };
+
+  const handleReset = () => {
+    setDeviceNumber("");
+    onReset();
+  };
 
   return (
-    <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
-      <StyledTextField 
-        placeholder={t("Device Number")} // Translated placeholder
-        size="small" 
-        sx={{ width: 200 }} 
+    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2, alignItems: "center" }}>
+      <StyledTextField
+        placeholder={t("Device Number")}
+        value={deviceNumber}
+        onChange={(e) => setDeviceNumber(e.target.value)}
+        size="small"
+        sx={{ width: 200 }}
       />
-      <StyledButton variant="contained" size="small">
-        {t("Search")}  {/* Translated button text */}
+      <StyledButton variant="contained" size="medium" onClick={handleSearch}>
+        {t("Search")}
       </StyledButton>
-      <StyledButton variant="contained" size="small">
-        {t("View Default")}  {/* Translated button text */}
-      </StyledButton>
-      <Typography sx={{ marginLeft: 2 }}>
-        {'-->>' + t("Cryptocurrency Calculator")}  {/* Translated text */}
-      </Typography>
+      <Button variant="outlined" size="medium" onClick={handleReset}>
+        {t("Reset")}
+      </Button>
     </Box>
   );
 };
 
-export default SearchBar;
+export default TriggeringRulesSearchBar;

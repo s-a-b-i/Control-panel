@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, TextField, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useTranslation } from "react-i18next";  // Import useTranslation
+import { useTranslation } from "react-i18next";
 
 const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: "#2196f3",
+  backgroundColor: theme.palette.primary.main,
   color: "white",
   "&:hover": {
-    backgroundColor: "#1976d2",
+    backgroundColor: theme.palette.primary.dark,
   },
 }));
 
@@ -26,38 +26,74 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const SearchBar = () => {
-  const { t } = useTranslation();  // Initialize translation hook
+const SearchBar = ({ onSearch }) => {
+  const { t } = useTranslation();
+  const [searchParams, setSearchParams] = useState({
+    deviceNo: '',
+    appName: '',
+    packageName: '',
+    tagNotes: ''
+  });
+
+  const handleChange = (e) => {
+    setSearchParams({ ...searchParams, [e.target.name]: e.target.value });
+  };
+
+  const handleSearch = () => {
+    onSearch(searchParams);
+  };
+
+  const handleReset = () => {
+    setSearchParams({
+      deviceNo: '',
+      appName: '',
+      packageName: '',
+      tagNotes: ''
+    });
+    onSearch({});
+  };
 
   return (
-    <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
       <StyledTextField 
-        placeholder={t("Device Number")}  // Translated placeholder
+        name="deviceNo"
+        placeholder={t("Device Number")}
         size="small" 
         sx={{ width: 200 }} 
+        value={searchParams.deviceNo}
+        onChange={handleChange}
       />
       <StyledTextField 
-        placeholder={t("APP Name")}  // Translated placeholder
+        name="appName"
+        placeholder={t("APP Name")}
         size="small" 
         sx={{ width: 200 }} 
+        value={searchParams.appName}
+        onChange={handleChange}
       />
       <StyledTextField 
-        placeholder={t("Application package name")}  // Translated placeholder
+        name="packageName"
+        placeholder={t("Application package name")}
         size="small" 
         sx={{ width: 200 }} 
+        value={searchParams.packageName}
+        onChange={handleChange}
       />
       <StyledTextField 
-        placeholder={t("Tag Notes")}  // Translated placeholder
+        name="tagNotes"
+        placeholder={t("Tag Notes")}
         size="small" 
         sx={{ width: 200 }} 
+        value={searchParams.tagNotes}
+        onChange={handleChange}
       />
       
-      <StyledButton variant="contained" size="small">
-        {t("Search")}  {/* Translated button */}
+      <StyledButton variant="contained" size="small" onClick={handleSearch}>
+        {t("Search")}
       </StyledButton>
       
-      <StyledButton variant="outlined" size="small">
-        {t("Reset")}  {/* Translated button */}
+      <StyledButton variant="outlined" size="small" onClick={handleReset}>
+        {t("Reset")}
       </StyledButton>
     </Box>
   );

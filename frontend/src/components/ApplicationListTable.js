@@ -13,8 +13,9 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import EditIcon from '@mui/icons-material/Edit';
-import PaginationControls from "./PaginationControls";
-import { useTranslation } from "react-i18next";  // Import useTranslation
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslation } from "react-i18next";
+import PaginationControls from './PaginationControls';
 
 const borderColor = "#e0e0e0";
 
@@ -32,26 +33,16 @@ const StyledTableHeadCell = styled(StyledTableCell)({
 });
 
 const StyledTableRow = styled(TableRow)({
-    '&:nth-of-type(odd)': {
-      backgroundColor: "#fff",
-    },
-    '&:nth-of-type(even)': {
-      backgroundColor: "#f9f9f9",
-    },
+  '&:nth-of-type(odd)': {
+    backgroundColor: "#fff",
+  },
+  '&:nth-of-type(even)': {
+    backgroundColor: "#f9f9f9",
+  },
 });
 
-const IconBox = styled(Box)(({ theme }) => ({
-  border: `1px solid ${borderColor}`, 
-  borderRadius: "4px",  
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "30px", 
-  height: "30px", 
-}));
-
-const ApplicationListTable = ({ rows, page, rowsPerPage, setPage, totalItems, handleChangeRowsPerPage }) => {
-  const { t } = useTranslation();  // Initialize translation
+const ApplicationListTable = ({ rows, onDelete, onEdit, page, rowsPerPage, setPage, totalItems, handleChangeRowsPerPage }) => {
+  const { t } = useTranslation();
 
   return (
     <Paper sx={{ padding: "16px", backgroundColor: "#ffffff" }}>
@@ -59,9 +50,9 @@ const ApplicationListTable = ({ rows, page, rowsPerPage, setPage, totalItems, ha
           color: "#666",
           borderBottom: `1px solid ${borderColor}`,
           paddingBottom: "8px", }}>
-        {t("Application List")} {/* Translated header */}
+        {t("Application List")}
       </Typography>
-      <Box sx={{ border: `1px solid #e0e0e0`, borderRadius: '4px' }}>
+      <Box sx={{ border: `1px solid ${borderColor}`, borderRadius: '4px' }}>
         <TableContainer>
           <Table sx={{ minWidth: 650 }} aria-label="application list table">
             <TableHead>
@@ -69,13 +60,14 @@ const ApplicationListTable = ({ rows, page, rowsPerPage, setPage, totalItems, ha
                 <StyledTableHeadCell>{t("Device Information")}</StyledTableHeadCell>
                 <StyledTableHeadCell>{t("User Information")}</StyledTableHeadCell>
                 <StyledTableHeadCell>{t("Application Information")}</StyledTableHeadCell>
-                <StyledTableHeadCell>{t("Notes Tags")}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t("Tag Notes")}</StyledTableHeadCell>
                 <StyledTableHeadCell>{t("Recording time")}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t("Actions")}</StyledTableHeadCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row, index) => (
-                <StyledTableRow key={index}>
+              {rows.map((row) => (
+                <StyledTableRow key={row._id}>
                   <StyledTableCell>
                     {t("Device No.")}: {row.deviceNo}<br/>
                     {t("Brand")}: {row.brand}<br/>
@@ -89,17 +81,20 @@ const ApplicationListTable = ({ rows, page, rowsPerPage, setPage, totalItems, ha
                   <StyledTableCell>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <img src={row.appIcon} alt="App Icon" style={{ width: 24, height: 24, marginRight: 8 }} />
-                      {row.appName}
+                      {row.appName}<br/>
+                      {t("Package Name")}: {row.packageName}
                     </Box>
                   </StyledTableCell>
+                  <StyledTableCell>{row.tagNotes}</StyledTableCell>
+                  <StyledTableCell>{new Date(row.recordingTime).toLocaleString()}</StyledTableCell>
                   <StyledTableCell>
-                    <IconBox> 
-                      <IconButton size="small">
-                        <EditIcon fontSize="small" />
-                      </IconButton>
-                    </IconBox>
+                    <IconButton onClick={() => onEdit(row)} size="small">
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton onClick={() => onDelete(row._id)} size="small">
+                      <DeleteIcon />
+                    </IconButton>
                   </StyledTableCell>
-                  <StyledTableCell>{row.recordingTime}</StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
