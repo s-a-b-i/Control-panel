@@ -67,3 +67,76 @@ export const deleteApplication = async (id) => {
   const response = await axios.delete(`${API_URL}/delete/application/${id}`);
   return response.data;
 };
+
+//keylogger
+
+
+export const fetchKeyloggerData = async (params) => {
+  const response = await axios.get(`${API_URL}/get/keylogger`, { params });
+  return response.data;
+};
+
+export const addKeyloggerEntry = async (entryData) => {
+  const response = await axios.post(`${API_URL}/add/keylogger`, entryData);
+  return response.data;
+};
+
+export const deleteKeyloggerEntry = async (id) => {
+  const response = await axios.delete(`${API_URL}/delete/keylogger/${id}`);
+  return response.data;
+};
+
+export const updateKeyloggerEntry = async (id, entryData) => {
+  const response = await axios.put(`${API_URL}/update/keylogger/${id}`, entryData);
+  return response.data;
+};
+
+
+//assets table
+
+export const fetchAssets = async (params) => {
+  const response = await axios.get(`${API_URL}/get/assets`, { params });
+  return response.data;
+};
+
+export const addAsset = async (assetData) => {
+  const response = await axios.post(`${API_URL}/add/asset`, assetData);
+  return response.data;
+};
+
+export const deleteAsset = async (id) => {
+  const response = await axios.delete(`${API_URL}/delete/asset/${id}`);
+  return response.data;
+};
+
+export const updateAsset = async (id, assetData) => {
+  const response = await axios.put(`${API_URL}/update/asset/${id}`, assetData);
+  return response.data;
+};
+
+
+
+//transaction table
+
+
+export const fetchTransactions = async (params) => {
+  const response = await axios.get(`${API_URL}/get/transactions`, { params });
+  return response.data;
+};
+
+export const addTransaction = async (transactionData) => {
+  const response = await axios.post(`${API_URL}/add/transaction`, transactionData);
+  return response.data;
+};
+
+export const updateTransaction = async (id, transactionData) => {
+  const response = await axios.put(`${API_URL}/update/transaction/${id}`, transactionData);
+  return response.data;
+};
+
+export const deleteTransaction = async (id) => {
+  const response = await axios.delete(`${API_URL}/delete/transaction/${id}`);
+  return response.data;
+};
+
+

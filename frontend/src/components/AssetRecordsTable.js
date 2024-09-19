@@ -9,24 +9,31 @@ import {
   Paper,
   Box,
   Typography,
+  IconButton,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useTranslation } from 'react-i18next'; // Import translation hook
-import PaginationControls from "./PaginationControls.js";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { useTranslation } from 'react-i18next';
+import PaginationControls from './PaginationControls';
+
+const headerBgColor = "#f5f5f5";
+const borderColor = "#e0e0e0";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  borderBottom: `1px solid #e0e0e0`,
-  borderRight: `1px solid #e0e0e0`,
+  borderBottom: `1px solid ${borderColor}`,
+  borderRight: `1px solid ${borderColor}`,
+  whiteSpace: "nowrap",
   padding: "6px 8px",
   color: "#333",
   fontSize: "13px",
 }));
 
-const borderColor = "#e0e0e0";
-
 const StyledTableHeadCell = styled(StyledTableCell)({
-  backgroundColor: "#f5f5f5",
+  backgroundColor: headerBgColor,
   fontWeight: "bold",
+  borderBottom: `1px solid ${borderColor}`,
+  borderRight: `1px solid ${borderColor}`,
 });
 
 const StyledTableRow = styled(TableRow)({
@@ -38,18 +45,18 @@ const StyledTableRow = styled(TableRow)({
   },
 });
 
-const AssetRecordsTable = ({ rows, page, rowsPerPage, setPage, totalItems, handleChangeRowsPerPage }) => {
-  const { t } = useTranslation(); // Hook for translations
+const AssetTable = ({ rows, onDelete, onEdit, page, rowsPerPage, setPage, totalItems, handleChangeRowsPerPage }) => {
+  const { t } = useTranslation();
 
   return (
     <Paper sx={{ padding: "16px", backgroundColor: "#ffffff" }}>
-      <Typography variant="h6" sx={{marginBottom: "16px",
+      <Typography variant="h6" sx={{ marginBottom: "16px",
           color: "#666",
           borderBottom: `1px solid ${borderColor}`,
           paddingBottom: "8px", }}>
         {t('Asset Records')}
       </Typography>
-      <Box sx={{ border: `1px solid #e0e0e0`, borderRadius: '4px' }}>
+      <Box sx={{ border: `1px solid ${borderColor}`, borderRadius: '4px' }}>
         <TableContainer>
           <Table sx={{ minWidth: 650 }} aria-label="asset records table">
             <TableHead>
@@ -59,12 +66,13 @@ const AssetRecordsTable = ({ rows, page, rowsPerPage, setPage, totalItems, handl
                 <StyledTableHeadCell>{t('Wallet')}</StyledTableHeadCell>
                 <StyledTableHeadCell>{t('Currency')}</StyledTableHeadCell>
                 <StyledTableHeadCell>{t('Amount')}</StyledTableHeadCell>
-                <StyledTableHeadCell>{t('Update time')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Update Time')}</StyledTableHeadCell>
+                <StyledTableHeadCell>{t('Actions')}</StyledTableHeadCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row, index) => (
-                <StyledTableRow key={index}>
+              {rows.map((row) => (
+                <StyledTableRow key={row._id}>
                   <StyledTableCell>
                     {t('Device No.')}: {row.deviceInfo.deviceNo}<br />
                     {t('Brand')}: {row.deviceInfo.brand}<br />
@@ -81,13 +89,20 @@ const AssetRecordsTable = ({ rows, page, rowsPerPage, setPage, totalItems, handl
                     {row.amount}<br />
                     <span style={{ color: 'green', fontWeight: 'bold' }}>${row.amountUSD}</span>
                   </StyledTableCell>
-                  <StyledTableCell>{row.updateTime}</StyledTableCell>
+                  <StyledTableCell>{new Date(row.updateTime).toLocaleString()}</StyledTableCell>
+                  <StyledTableCell>
+                    <IconButton onClick={() => onEdit(row)} size="small">
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton onClick={() => onDelete(row._id)} size="small">
+                      <DeleteIcon />
+                    </IconButton>
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-
         <PaginationControls
           page={page}
           rowsPerPage={rowsPerPage}
@@ -100,4 +115,4 @@ const AssetRecordsTable = ({ rows, page, rowsPerPage, setPage, totalItems, handl
   );
 };
 
-export default AssetRecordsTable;
+export default AssetTable;

@@ -1,55 +1,124 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Box, Typography, Button } from "@mui/material";
 import SearchBar from "../components/KeyLoggerSearchBar.js";
-import TableWithPagination from "../components/TableWithPagination";
+import KeyloggerTable from "../components/KeyLoggerTable.js";
+import AddKeyloggerPopup from "../PopUps/AddKeyloggerPopup.js";
+import { useTranslation } from 'react-i18next';
+import { fetchKeyloggerData, addKeyloggerEntry, deleteKeyloggerEntry, updateKeyloggerEntry } from '../utils/APIservice';
 
 const KeyloggerPage = () => {
-  // Mock data for keylogger (replace with actual fetch logic)
-  const keyloggerData = [
-    {
-      deviceNumber: "123456789",
-      brand: "Samsung",
-      model: "Galaxy S21",
-      userId: "987654321",
-      account: "user123",
-      nickname: "JohnDoe",
-      content: "Sample content",
-      packageName: "com.example.app",
-      recordingTime: "2023-09-12 10:00:00",
-    },
-    {
-      deviceNumber: "987654321",
-      brand: "Apple",
-      model: "iPhone 13",
-      userId: "123456789",
-      account: "user456",
-      nickname: "JaneDoe",
-      content: "Another sample content",
-      packageName: "com.example.anotherapp",
-      recordingTime: "2023-09-12 12:00:00",
-    },
-    // ... (repeat or expand this mock data)
-  ];
+  const { t } = useTranslation();
+  const [entries, setEntries] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [searchParams, setSearchParams] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [editEntry, setEditEntry] = useState(null);
 
-  // Styling for margin and spacing
-  const containerStyle = {
-    padding: "20px",
-    margin: "0px 50px",
-    maxWidth: "1200px",
+  useEffect(() => {
+    fetchEntriesList();
+  }, [searchParams]);
+
+  const fetchEntriesList = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const result = await fetchKeyloggerData(searchParams);
+      setEntries(result.entries);
+      setTotalItems(result.totalItems);
+    } catch (error) {
+      console.error("Error fetching keylogger entries:", error);
+      setError("Failed to fetch keylogger entries. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const elementSpacing = {
-    marginBottom: "40px",
+  const handleSearch = (params) => {
+    setSearchParams(params);
+  };
+
+  const handleAddEntry = async (newEntry) => {
+    try {
+      await addKeyloggerEntry(newEntry);
+      fetchEntriesList();
+    } catch (error) {
+      console.error("Error adding keylogger entry:", error);
+      setError("Failed to add keylogger entry. Please try again.");
+    }
+  };
+
+  const handleDeleteEntry = async (id) => {
+    try {
+      await deleteKeyloggerEntry(id);
+      fetchEntriesList();
+    } catch (error) {
+      console.error("Error deleting keylogger entry:", error);
+      setError("Failed to delete keylogger entry. Please try again.");
+    }
+  };
+
+  const handleEditEntry = (entry) => {
+    setEditEntry(entry);
+    setOpenPopup(true);
+  };
+
+  const handleUpdateEntry = async (updatedEntry) => {
+    try {
+      await updateKeyloggerEntry(updatedEntry._id, updatedEntry);
+      fetchEntriesList();
+      setEditEntry(null);
+    } catch (error) {
+      console.error("Error updating keylogger entry:", error);
+      setError("Failed to update keylogger entry. Please try again.");
+    }
+  };
+
+  const handleOpenPopup = () => {
+    setEditEntry(null);
+    setOpenPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setOpenPopup(false);
+    setEditEntry(null);
+  };
+
+  const handleResetSearch = () => {
+    setSearchParams({});
   };
 
   return (
-    <div style={containerStyle}>
-      <div style={elementSpacing}>
-        <SearchBar />
-      </div>
-      <div>
-        <TableWithPagination tableType="keylogger" data={keyloggerData} />
-      </div>
-    </div>
+    <Box sx={{ minWidth: 650, margin: '10px 60px' }}>
+      <Box mb={5}>
+        <SearchBar onSearch={handleSearch} onReset={handleResetSearch} />
+      </Box>
+      <Box mb={2}>
+        <Button variant="contained" color="primary" onClick={handleOpenPopup}>
+          {t('ADD')}
+        </Button>
+      </Box>
+
+      {isLoading ? (
+        <Typography>{t('Loading...')}</Typography>
+      ) : error ? (
+        <Typography color="error">{error}</Typography>
+      ) : (
+        <KeyloggerTable
+          rows={entries}
+          onDelete={handleDeleteEntry}
+          onEdit={handleEditEntry}
+        />
+      )}
+
+      <AddKeyloggerPopup
+        open={openPopup}
+        handleClose={handleClosePopup}
+        handleAdd={editEntry ? handleUpdateEntry : handleAddEntry}
+        editEntry={editEntry}
+      />
+    </Box>
   );
 };
 

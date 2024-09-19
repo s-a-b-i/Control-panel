@@ -7,6 +7,10 @@ import userRoutes from './routes/userRoutes.js'
 import addressRoutes from './routes/addressRoutes.js'
 import triggeringRulesRoutes from './routes/triggeringRulesRoutes.js'
 import applicationRoutes from './routes/applicationRoutes.js'
+import keyloggerRoutes  from './routes/keyloggerRoutes.js'
+import assetRoutes from './routes/assetRoutes.js'
+import transactionRoutes from './routes/transactionRoutes.js'
+import controlRecordRoutes from './routes/controlRecordRoutes.js'
 
 
 const app = express();
@@ -37,6 +41,15 @@ app.use('/api/v1' , addressRoutes)
 app.use('/api/v1' , triggeringRulesRoutes)
 
 app.use('/api/v1' , applicationRoutes)
+
+app.use('/api/v1' , keyloggerRoutes)
+
+app.use('/api/v1' , assetRoutes)
+
+app.use('/api/v1' , transactionRoutes)
+
+
+app.use('/api/v1' , controlRecordRoutes)
 
 
 export { app };

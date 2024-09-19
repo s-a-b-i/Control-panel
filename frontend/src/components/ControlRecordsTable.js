@@ -22,8 +22,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   fontSize: "13px",
 }));
 
-const borderColor = "#e0e0e0";
-
 const StyledTableHeadCell = styled(StyledTableCell)({
   backgroundColor: "#f5f5f5",
   fontWeight: "bold",
@@ -40,16 +38,22 @@ const StyledTableRow = styled(TableRow)({
 
 const ControlRecordsTable = ({ rows, page, rowsPerPage, setPage, totalItems, handleChangeRowsPerPage }) => {
   const { t } = useTranslation();
+  const borderColor = "#e0e0e0"; // moved this inside to use correctly
 
   return (
     <Paper sx={{ padding: "16px", backgroundColor: "#ffffff" }}>
-      <Typography variant="h6" sx={{ marginBottom: "16px",
+      <Typography
+        variant="h6"
+        sx={{
+          marginBottom: "16px",
           color: "#666",
           borderBottom: `1px solid ${borderColor}`,
-          paddingBottom: "8px",}}>
+          paddingBottom: "8px",
+        }}
+      >
         {t('ControlRecords')}
       </Typography>
-      <Box sx={{ border: `1px solid #e0e0e0`, borderRadius: '4px' }}>
+      <Box sx={{ border: `1px solid ${borderColor}`, borderRadius: '4px' }}>
         <TableContainer>
           <Table sx={{ minWidth: 650 }} aria-label="control records table">
             <TableHead>

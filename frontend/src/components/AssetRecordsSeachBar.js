@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, TextField, Button, Select, MenuItem } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
 
 const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: "#2196f3",
+  backgroundColor: theme.palette.primary.main,
   color: "white",
   "&:hover": {
-    backgroundColor: "#1976d2",
+    backgroundColor: theme.palette.primary.dark,
   },
 }));
 
@@ -39,44 +39,70 @@ const StyledSelect = styled(Select)({
   },
 });
 
-const SearchBar = () => {
-  const { t } = useTranslation(); // Initialize the translation function
+const AssetSearchBar = ({ onSearch, onReset }) => {
+  const { t } = useTranslation();
+  const [deviceNo, setDeviceNo] = useState("");
+  const [wallet, setWallet] = useState("all");
+  const [assetView, setAssetView] = useState("all");
+
+  const handleSearch = () => {
+    onSearch({ deviceNo, wallet: wallet !== "all" ? wallet : "", assetView });
+  };
+
+  const handleReset = () => {
+    setDeviceNo("");
+    setWallet("all");
+    setAssetView("all");
+    onReset();
+  };
 
   return (
-    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
+    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2, alignItems: "center" }}>
       <StyledTextField
-        placeholder={t('Device Number')} // Translated placeholder
+        placeholder={t('Device Number')}
+        value={deviceNo}
+        onChange={(e) => setDeviceNo(e.target.value)}
         size="small"
         sx={{ width: 200 }}
       />
 
-      <StyledSelect value="all" size="small" sx={{ width: 200 }}>
-        <MenuItem value="all">{t('all')}</MenuItem>
-        <MenuItem value="binance">{t('Binance-----Binance Exchange')}</MenuItem>
-        <MenuItem value="huobi">{t('Huobi-------Huobi Exchange')}</MenuItem>
-        <MenuItem value="okx">{t('OKX-----------OECD Exchange')}</MenuItem>
-        <MenuItem value="kucoin">{t('KuCoin-----Exchange')}</MenuItem>
-        <MenuItem value="poloniex">{t('Poloniex-----Exchange')}</MenuItem>
-        <MenuItem value="trust">{t('Trust--------Trust Wallet')}</MenuItem>
-        <MenuItem value="imtoken">{t('imToken-----IM wallet')}</MenuItem>
-        <MenuItem value="tokenpocket">{t('TokenPocket--TP Wallet')}</MenuItem>
-        <MenuItem value="tronlink">{t('TronLink-----Bobao Wallet')}</MenuItem>
+      <StyledSelect
+        value={wallet}
+        onChange={(e) => setWallet(e.target.value)}
+        size="small"
+        sx={{ width: 200 }}
+      >
+        <MenuItem value="all">{t('All Wallets')}</MenuItem>
+        <MenuItem value="binance">{t('Binance')}</MenuItem>
+        <MenuItem value="huobi">{t('Huobi')}</MenuItem>
+        <MenuItem value="okx">{t('OKX')}</MenuItem>
+        <MenuItem value="kucoin">{t('KuCoin')}</MenuItem>
+        <MenuItem value="poloniex">{t('Poloniex')}</MenuItem>
+        <MenuItem value="trust">{t('Trust Wallet')}</MenuItem>
+        <MenuItem value="imtoken">{t('imToken')}</MenuItem>
+        <MenuItem value="tokenpocket">{t('TokenPocket')}</MenuItem>
+        <MenuItem value="tronlink">{t('TronLink')}</MenuItem>
       </StyledSelect>
 
-      <StyledSelect value="all" size="small" sx={{ width: 200 }}>
-        <MenuItem value="all">{t('all')}</MenuItem>
-        <MenuItem value="total_assets">{t('Only look at total assets')}</MenuItem>
+      <StyledSelect
+        value={assetView}
+        onChange={(e) => setAssetView(e.target.value)}
+        size="small"
+        sx={{ width: 200 }}
+      >
+        <MenuItem value="all">{t('All Assets')}</MenuItem>
+        <MenuItem value="total_assets">{t('Only Total Assets')}</MenuItem>
       </StyledSelect>
 
-      <StyledButton variant="contained" size="small">
-        {t('search')}
+      <StyledButton variant="contained" size="medium" onClick={handleSearch}>
+        {t('Search')}
       </StyledButton>
 
-      <StyledButton variant="outlined" size="small">
+      <Button variant="outlined" size="medium" onClick={handleReset}>
         {t('Reset')}
-      </StyledButton>
+      </Button>
     </Box>
   );
 };
 
-export default SearchBar;
+export default AssetSearchBar;

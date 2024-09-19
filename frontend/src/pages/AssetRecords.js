@@ -1,69 +1,154 @@
-import React from "react";
-import SearchBar from "../components/AssetRecordsSeachBar"; // Assuming you have a search bar for assets
-import TableWithPagination from "../components/TableWithPagination";
+import React, { useState, useEffect } from "react";
+import { Box, Typography, Button } from "@mui/material";
+import SearchBar from "../components/AssetRecordsSeachBar";
+import AssetTable from "../components/AssetRecordsTable";
+import AddAssetPopup from "../PopUps/AddAssetPopup";
+import { useTranslation } from 'react-i18next';
+import { fetchAssets, addAsset, deleteAsset, updateAsset } from '../utils/APIservice';
 
-const AssetsPage = () => {
-  // Mock data (replace with actual fetch logic)
-  const assetData = [
-    {
-      deviceInfo: {
-        deviceNo: "12345",
-        brand: "BrandA",
-        model: "ModelX"
-      },
-      userInfo: {
-        userId: "user01",
-        account: "userAccount",
-        nickname: "UserNickname"
-      },
-      wallet: "Wallet1",
-      currency: "USD",
-      amount: 1000,
-      amountUSD: 1000,
-      updateTime: "2024-09-15T12:00:00Z"
-    },
-    {
-      deviceInfo: {
-        deviceNo: "67890",
-        brand: "BrandB",
-        model: "ModelY"
-      },
-      userInfo: {
-        userId: "user02",
-        account: "userAccount2",
-        nickname: "UserNickname2"
-      },
-      wallet: "Wallet2",
-      currency: "EUR",
-      amount: 2000,
-      amountUSD: 2200, // Example conversion rate
-      updateTime: "2024-09-15T13:00:00Z"
-    },
-    // Add more objects to match the required data size
-    // Repeat above object as needed
-  ];
+const AssetPage = () => {
+  const { t } = useTranslation();
+  const [assets, setAssets] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [searchParams, setSearchParams] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [editAsset, setEditAsset] = useState(null);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  // Styling for margin and spacing
-  const containerStyle = {
-    padding: "20px",
-    margin: "0px 50px",
-    maxWidth: "1200px",
+  useEffect(() => {
+    fetchAssetList();
+  }, [searchParams, page, rowsPerPage]);
+
+  const fetchAssetList = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const result = await fetchAssets({
+        ...searchParams,
+        page: page + 1,
+        limit: rowsPerPage
+      });
+      setAssets(result.assets);
+      setTotalItems(result.totalItems);
+    } catch (error) {
+      console.error("Error fetching assets:", error);
+      setError("Failed to fetch assets. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const elementSpacing = {
-    marginBottom: "40px",
+  const handleSearch = (params) => {
+    setSearchParams(params);
+    setPage(0);
+  };
+
+  const handleReset = () => {
+    setSearchParams({});
+    setPage(0);
+  };
+
+  const handleAddAsset = async (newAsset) => {
+    try {
+      await addAsset(newAsset);
+      fetchAssetList();
+      setOpenPopup(false);
+    } catch (error) {
+      console.error("Error adding asset:", error);
+      setError("Failed to add asset. Please try again.");
+    }
+  };
+
+  const handleDeleteAsset = async (id) => {
+    try {
+      await deleteAsset(id);
+      fetchAssetList();
+    } catch (error) {
+      console.error("Error deleting asset:", error);
+      setError("Failed to delete asset. Please try again.");
+    }
+  };
+
+  const handleEditAsset = (asset) => {
+    setEditAsset(asset);
+    setOpenPopup(true);
+  };
+
+  const handleUpdateAsset = async (updatedAsset) => {
+    try {
+      await updateAsset(updatedAsset._id, updatedAsset);
+      fetchAssetList();
+      setEditAsset(null);
+      setOpenPopup(false);
+    } catch (error) {
+      console.error("Error updating asset:", error);
+      setError("Failed to update asset. Please try again.");
+    }
+  };
+
+  const handleOpenPopup = () => {
+    setEditAsset(null);
+    setOpenPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setOpenPopup(false);
+    setEditAsset(null);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   return (
-    <div style={containerStyle}>
-      <div style={elementSpacing}>
-        <SearchBar /> {/* Replace with the appropriate search bar if available */}
-      </div>
-      <div>
-        <TableWithPagination tableType="asset" data={assetData} />
-      </div>
-    </div>
+    <Box sx={{ minWidth: 650, margin: '10px 60px' }}>
+      <Typography variant="h4" sx={{ mb: 3 }}>{t('Asset Management')}</Typography>
+      
+      <Box mb={5}>
+        <SearchBar onSearch={handleSearch} onReset={handleReset} />
+        </Box>
+
+        <Box mb={2}>
+        <Button 
+          variant="contained" 
+          color="primary" 
+          onClick={handleOpenPopup}
+          sx={{ height: '40px' }}
+        >
+          {t('Add Asset')}
+        </Button>
+      </Box>
+    
+      
+      {isLoading ? (
+        <Typography>{t('Loading...')}</Typography>
+      ) : error ? (
+        <Typography color="error">{error}</Typography>
+      ) : (
+        <AssetTable
+          rows={assets}
+          onDelete={handleDeleteAsset}
+          onEdit={handleEditAsset}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          setPage={setPage}
+          totalItems={totalItems}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      )}
+
+      <AddAssetPopup
+        open={openPopup}
+        handleClose={handleClosePopup}
+        handleAdd={editAsset ? handleUpdateAsset : handleAddAsset}
+        editAsset={editAsset}
+      />
+    </Box>
   );
 };
 
-export default AssetsPage;
+export default AssetPage;

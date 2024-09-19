@@ -85,8 +85,29 @@ const AddAddressPopup = ({ open, handleClose, handleAdd, editAddress }) => {
     { value: 'LTC', label: 'LTC - Litecoin' },
     { value: 'DOGE', label: 'DOGE - Dogecoin' },
     { value: 'DOT', label: 'DOT - Polkadot' },
+    { value: 'HT', label: 'HT - Huobi' },
     { value: 'MATIC', label: 'MATIC - Polygon' },
+    { value: 'EOS', label: 'EOS - EOS' },
+    { value: 'ADA', label: 'ADA - Cardano' },
+    { value: 'OP', label: 'OP - Optimism' },
+    { value: 'CRO', label: 'CRO - Cronos Chain' },
+    { value: 'BCH', label: 'BCH - Bitcoin Cash' },
+    { value: 'ALGO', label: 'ALGO - Algorand' },
+    { value: 'ETC', label: 'ETC - Ethereum Classic' },
+    { value: 'VTHO', label: 'VTHO - VeThor' },
+    { value: 'OKB', label: 'OKB - OKB' },
+    { value: 'OKT', label: 'OKT - OKC Token' },
+    { value: 'XDAI', label: 'XDAI - Gnosis' },
+    { value: 'ZRX', label: 'ZRX - 0x' },
+    { value: 'AUTO', label: 'AUTO - AUTOv2' },
+    { value: 'ATOM', label: 'ATOM - Cosmos Hub' },
+    { value: 'CKB', label: 'CKB - Nervos' },
+    { value: 'KSM', label: 'KSM - Kusama' },
+    { value: 'FIL', label: 'FIL - Filecoin' },
+    { value: 'AVAX', label: 'AVAX - Avalanche' },
+    { value: 'XTZ', label: 'XTZ - Tezos' },
   ];
+  
 
   return (
     <StyledDialog open={open} onClose={handleClose}>

@@ -34,7 +34,7 @@ const CustomActionButton = styled(Button)(({ theme, color }) => {
   return {
     backgroundColor,
     color: textColor,
-    fontSize: "11px",
+    fontSize: "13px",
     margin: "0 2px",
     padding: "1px 6px",
     textTransform: "none",
@@ -44,6 +44,9 @@ const CustomActionButton = styled(Button)(({ theme, color }) => {
       backgroundColor: hoverBackgroundColor,
       borderColor: color === 'secondary' ? borderColor : "none",
     },
+    ...(color === 'tertiary' && {
+      color: "white !important", // Force white text color for tertiary
+    }),
   };
 });
 

@@ -123,7 +123,7 @@ const SearchBar = () => {
         {t('Search')}
       </StyledButton>
       <StyledButton variant="contained" size="small">
-        {t('Added')}
+        {t('Add')}
       </StyledButton>
     </Box>
   );
