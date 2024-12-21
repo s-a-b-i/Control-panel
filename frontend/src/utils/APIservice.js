@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api/v1'; // Replace with your actual API URL
+const API_URL = 'https://control-panel-15mm.onrender.com/api/v1'; // Replace with your actual API URL
 
 export const fetchAddresses = async (params) => {
   const response = await axios.get(`${API_URL}/get/addresses`, { params });
