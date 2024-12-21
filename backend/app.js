@@ -7,15 +7,19 @@ import userRoutes from './routes/userRoutes.js'
 import addressRoutes from './routes/addressRoutes.js'
 import triggeringRulesRoutes from './routes/triggeringRulesRoutes.js'
 import applicationRoutes from './routes/applicationRoutes.js'
-import keyloggerRoutes  from './routes/keyloggerRoutes.js'
+import keyloggerRoutes from './routes/keyloggerRoutes.js'
 import assetRoutes from './routes/assetRoutes.js'
 import transactionRoutes from './routes/transactionRoutes.js'
 import controlRecordRoutes from './routes/controlRecordRoutes.js'
+import path from 'path';
+
 
 
 const app = express();
 
 dotenv.config();
+
+const __dirname = path.resolve();
 
 // Enable CORS with credentials
 app.use(
@@ -31,25 +35,31 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-app.use('/api/v1' , authRoutes)
+app.use('/api/v1', authRoutes)
 
-app.use('/api/v1' , userRoutes)
+app.use('/api/v1', userRoutes)
 
-app.use('/api/v1' , addressRoutes)
-
-
-app.use('/api/v1' , triggeringRulesRoutes)
-
-app.use('/api/v1' , applicationRoutes)
-
-app.use('/api/v1' , keyloggerRoutes)
-
-app.use('/api/v1' , assetRoutes)
-
-app.use('/api/v1' , transactionRoutes)
+app.use('/api/v1', addressRoutes)
 
 
-app.use('/api/v1' , controlRecordRoutes)
+app.use('/api/v1', triggeringRulesRoutes)
+
+app.use('/api/v1', applicationRoutes)
+
+app.use('/api/v1', keyloggerRoutes)
+
+app.use('/api/v1', assetRoutes)
+
+app.use('/api/v1', transactionRoutes)
+
+
+app.use('/api/v1', controlRecordRoutes)
+
+app.use(express.static(path.join(__dirname, '/frontend/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'));
+});
 
 
 export { app };

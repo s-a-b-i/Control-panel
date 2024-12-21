@@ -2,7 +2,10 @@ import dotenv from 'dotenv';
 import connectDB from './config/database.config.js';
 import {app} from './app.js';
 
+
 dotenv.config();
+
+
 
 (async () => {
     try {
@@ -17,6 +20,8 @@ dotenv.config();
 
         // Set the port from the environment variable or default to 5000
         const PORT = process.env.PORT || 5000;
+
+        
 
         // Start the server
         app.listen(PORT, () => {
