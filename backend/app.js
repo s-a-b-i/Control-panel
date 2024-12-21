@@ -42,11 +42,11 @@ app.use("/api/v1", transactionRoutes);
 app.use("/api/v1", controlRecordRoutes);
 
 // Serve static files from the `frontend/dist` directory
-app.use(express.static(path.join(__dirname, "frontend", "dist")));
+app.use(express.static(path.join(__dirname, "frontend", "build")));
 
 // Catch-all route to serve `index.html` for frontend routing
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
 });
 
 export { app };
