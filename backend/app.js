@@ -55,7 +55,7 @@ app.use('/api/v1', transactionRoutes)
 
 app.use('/api/v1', controlRecordRoutes)
 
-app.use(express.static(path.join(__dirname, '/frontend/dist')));
+app.use(express.static(path.join(__dirname, 'frontend' , 'dist')));
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'));
